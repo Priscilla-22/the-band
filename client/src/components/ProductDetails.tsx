@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import config from "../config";
 
+
 interface Product {
     id: number;
     name: string;
@@ -32,28 +33,16 @@ const ProductDetailPage: React.FC = () => {
     if (!product) return <div>Loading...</div>;
 
     return (
-        <div className="product-detail-container p-10 mt-20">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8">
+        <div className="product-detail-container p-10 mt-28">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 {/* Product Image and Gallery */}
-                <div className="product-images w-full sm:w-full lg:w-full flex ">
-                    {/* Main Image */}
-                    <div className="main-image w-2/3">
-                        <img
-                            src={product.image_url}
-                            alt={product.name}
-                            className="w-full h-96 object-cover mb-4 rounded-lg shadow-lg"
-                        />
-                        {/* More Details Section (Below Product Image and Information) */}
-                        <div className="more-details mt-10 w-full justify-items-start">
-                            <h2 className="text-3xl font-semibold text-gray-800">Detailed Information</h2>
-                            {/* Horizontal Line Below Heading */}
-                            <hr className="my-4 border-t-2 border-red-500 w-[160px]" />
-                            <p className="text-lg text-gray-700 mt-4 text-left">{product.more_details}</p>
-                        </div>
-                    </div>
-
-                    {/* Image Gallery (Vertically on the Right of Main Image) */}
-                    <div className="image-gallery flex flex-col  w-1/3 pl-4">
+                <div className="product-images col-span-2">
+                    <img
+                        src={product.image_url}
+                        alt={product.name}
+                        className="w-full h-96 object-cover mb-4 rounded-lg shadow-lg"
+                    />
+                    <div className="image-gallery flex space-x-4">
                         <img
                             src={product.image_url}
                             alt={product.name}
@@ -71,16 +60,20 @@ const ProductDetailPage: React.FC = () => {
                         />
                     </div>
 
+                    {/* More Details Section (Below Product Image and Information) */}
+                    <div className="more-details mt-10 w-full justify-items-start">
+                        <h2 className="text-3xl font-semibold text-gray-800">Detailed Information</h2>
+                        {/* Horizontal Line Below Heading */}
+                        <hr className="my-4 border-t-2 border-red-500 w-[160px]" />
+                        <p className="text-lg text-gray-700 mt-4 text-left">{product.more_details}</p>
+                    </div>
                 </div>
 
-
-
-
-                {/* Product Information  */}
-                <div className="product-info justify-items-start ml-20">
-                    <h1 className="text-4xl font-semibold text-gray-800">{product.name}</h1>
-                    <p className="text-lg text-gray-700 mt-4">{product.description}</p>
-                    <p className="text-2xl font-bold text-gray-800 mt-6">${product.price}</p>
+                {/* Product Information */}
+                <div className="product-info ml-20">
+                    <h1 className="text-4xl font-semibold text-gray-800 text-start">{product.name}</h1>
+                    <p className="text-lg text-gray-700 mt-4 text-start" >{product.description}</p>
+                    <p className="text-2xl font-bold text-gray-800 mt-6 text-start">${product.price}</p>
 
                     {/* Size Selection */}
                     <div className="size-selection mt-6 flex items-center">
@@ -98,7 +91,6 @@ const ProductDetailPage: React.FC = () => {
                         </select>
                     </div>
 
-
                     {/* Finishing Selection */}
                     <div className="finishing-selection mt-6 flex items-center">
                         <label htmlFor="finishing" className="block text-lg font-medium text-gray-700 mr-4">Finishing</label>
@@ -108,8 +100,8 @@ const ProductDetailPage: React.FC = () => {
                                     key={index}
                                     onClick={() => setSelectedFinishing(finish)}
                                     className={`p-3 border rounded-full focus:outline-none focus:ring-2 transition-colors 
-                    ${selectedFinishing === finish
-                                        ? "bg-gradient-to-r from-red-600 to-black text-white" // Apply gradient when selected
+                            ${selectedFinishing === finish
+                                        ? "bg-gradient-to-r from-red-600 to-black text-white"
                                         : "bg-white text-gray-700"}`}
                                 >
                                     {finish}
@@ -117,8 +109,6 @@ const ProductDetailPage: React.FC = () => {
                             ))}
                         </div>
                     </div>
-
-
 
                     {/* Add to Cart Button */}
                     <div className="mt-8">
@@ -128,28 +118,38 @@ const ProductDetailPage: React.FC = () => {
                     </div>
 
                     {/* Optional Guarantee & Rush Order */}
-                    <div className="mt-8 space-y-4">
-                        <div className="guarantee-option">
-                            <p className="text-lg text-gray-700">Extend Guarantee Time: <span className="font-semibold">$120</span></p>
-                            <button className="bg-gray-800 text-white py-2 px-4 rounded-md mt-2 hover:bg-gray-700">Add</button>
-                        </div>
-                        <div className="rush-order-option">
-                            <p className="text-lg text-gray-700">Rush Order: <span className="font-semibold">$50</span></p>
-                            <button className="bg-gray-800 text-white py-2 px-4 rounded-md mt-2 hover:bg-gray-700">Add</button>
-                        </div>
-                    </div>
+                    {/*<div className="mt-8 space-y-4">*/}
+                    {/*    <div className="guarantee-option">*/}
+                    {/*        <p className="text-lg text-gray-700">Extend Guarantee Time: <span className="font-semibold">$120</span></p>*/}
+                    {/*        <button className="bg-gray-800 text-white py-2 px-4 rounded-md mt-2 hover:bg-gray-700">Add</button>*/}
+                    {/*    </div>*/}
+                    {/*    <div className="rush-order-option">*/}
+                    {/*        <p className="text-lg text-gray-700">Rush Order: <span className="font-semibold">$50</span></p>*/}
+                    {/*        <button className="bg-gray-800 text-white py-2 px-4 rounded-md mt-2 hover:bg-gray-700">Add</button>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
 
                     {/* Shipping & Guarantee Information */}
-                    <div className="mt-8 space-y-2">
-                        <p className="text-lg text-gray-600">Guarantee for 30 days</p>
-                        <p className="text-lg text-gray-600">Shipped on Dec 24, 2023</p>
-                        <p className="text-lg text-gray-600">Made-to-order jewelry</p>
+                    <div className="mt-20 flex space-x-6">
+                        <div className="flex items-center space-x-2 border-r-2 pr-6">
+                            <i className="fas fa-shield-alt text-gray-600"></i>
+                            <span className="text-sm text-gray-600">Guarantee for 30 days</span>
+                        </div>
+                        <div className="flex items-center space-x-2 border-r-2 pr-6">
+                            <i className="fas fa-box-open text-gray-600"></i>
+                            <span className="text-sm text-gray-600">Shipped on Dec 24, 2023</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                            <i className="fas fa-gem text-gray-600"></i>
+                            <span className="text-sm text-gray-600">Made-to-order jewelry</span>
+                        </div>
                     </div>
+
+
                 </div>
             </div>
-
-
         </div>
+
     );
 };
 
