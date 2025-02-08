@@ -23,7 +23,7 @@ const PromotionalBanner: React.FC = () => {
     }, []);
 
     return (
-        <div className="absolute bottom-0 left-0 right-0 px-6 py-4">
+        <div className="absolute bottom-0 left-0 right-0 px-6 py-4 pb-20">
             {/* Scrollable Container */}
             <div
                 ref={scrollRef}
