@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useProductContext } from '../context/ProductContext';
 import config from "../config";
 
 
@@ -19,6 +20,9 @@ const ProductDetailPage: React.FC = () => {
     const [product, setProduct] = useState<Product | null>(null);
     const [selectedSize, setSelectedSize] = useState<string>('Pick your size');
     const [selectedFinishing, setSelectedFinishing] = useState<string>('Shiny');
+    const [quantity, setQuantity] = useState<number>(1);
+    const { addToCart } = useProductContext(); // Get addToCart from context
+
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -29,6 +33,12 @@ const ProductDetailPage: React.FC = () => {
 
         fetchProduct();
     }, [id]);
+
+    const handleAddToCart = () => {
+        if (product) {
+            addToCart(product, quantity); // Add the product with the selected quantity to the cart
+        }
+    };
 
     if (!product) return <div>Loading...</div>;
 
@@ -110,9 +120,25 @@ const ProductDetailPage: React.FC = () => {
                         </div>
                     </div>
 
+                    {/* Quantity Selector */}
+                    <div className="quantity-selector mt-6 flex items-center">
+                        <label htmlFor="quantity" className="block text-lg font-medium text-gray-700 mr-4">Quantity</label>
+                        <input
+                            id="quantity"
+                            type="number"
+                            min="1"
+                            value={quantity}
+                            onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value)))}
+                            className="w-20 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
+                        />
+                    </div>
+
                     {/* Add to Cart Button */}
                     <div className="mt-8">
-                        <button className="bg-red-600 text-white py-3 px-6 rounded-lg w-full hover:bg-red-700 focus:outline-none">
+                        <button
+                            onClick={handleAddToCart}
+                            className="bg-red-600 text-white py-3 px-6 rounded-lg w-full hover:bg-red-700 focus:outline-none"
+                        >
                             Add to Cart
                         </button>
                     </div>

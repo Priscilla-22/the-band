@@ -11,10 +11,9 @@ interface Product {
 
 interface ProductCardProps {
     product: Product;
-    addToCart: (product: Product) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     return (
         <div className="bg-black text-white p-4 rounded-lg shadow-lg w-full sm:w-80 md:w-60 lg:w-48 m-4">
             <Link to={`/product/${product.id}`} className="block">
@@ -23,12 +22,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
                 <p className="text-sm text-gray-300 mb-4">{product.description}</p>
                 <span className="text-xl font-bold">${product.price}</span>
             </Link>
-            <button
-                onClick={() => addToCart(product)}
-                className="mt-4 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 w-full"
-            >
-                Add to Cart
-            </button>
+            {/*<button*/}
+            {/*    onClick={() => addToCart(product)}*/}
+            {/*    className="mt-4 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 w-full"*/}
+            {/*>*/}
+            {/*    Add to Cart*/}
+            {/*</button>*/}
         </div>
     );
 }

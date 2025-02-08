@@ -1,5 +1,6 @@
 // src/components/Navbar.tsx
 import React, { useState } from 'react';
+import { useProductContext } from '../context/ProductContext';
 
 
 
@@ -13,8 +14,10 @@ interface NavbarProps {
     cartCount: number;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
+const Navbar: React.FC<NavbarProps> = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const { cartCount } = useProductContext();
+    const [cartAnimation, setCartAnimation] = useState<boolean>(false);
 
     // Navigation items
     const navItems: NavItem[] = [
@@ -28,6 +31,14 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
+
+    // Trigger animation when the cart count changes
+    React.useEffect(() => {
+        if (cartCount > 0) {
+            setCartAnimation(true);
+            setTimeout(() => setCartAnimation(false), 1000); // Reset animation after 1 second
+        }
+    }, [cartCount]);
 
     // Reusable component for each nav item with bouncing dots on hover
     const NavLink: React.FC<{ name: string; path: string }> = ({ name, path }) => (
@@ -75,8 +86,11 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
                     </div>
 
                     {/* Cart Count (Inside the Cart Icon) */}
+                    {/* Cart Count */}
                     {cartCount > 0 && (
-                        <span className="absolute top-0 right-0 w-5 h-5 bg-red-600 text-white text-xs rounded-full flex items-center justify-center">
+                        <span
+                            className={`absolute top-0 right-0 w-5 h-5 bg-red-600 text-white text-xs rounded-full flex items-center justify-center ${cartAnimation ? 'animate-bounce' : ''}`}
+                        >
                             {cartCount}
                         </span>
                     )}
