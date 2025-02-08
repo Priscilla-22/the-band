@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext'; // Import useAuth
+
 
 const AdminLogin: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const { login } = useAuth()
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -32,7 +35,7 @@ const AdminLogin: React.FC = () => {
             const token = data.token;
 
             // Save token to localStorage
-            localStorage.setItem('auth_token', token);
+            login(token);
 
             navigate('/admin/dashboard'); // Redirect to the admin dashboard after successful login
         } catch (err) {

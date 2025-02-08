@@ -1,7 +1,8 @@
 // src/components/Navbar.tsx
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useProductContext } from '../context/ProductContext';
-import { Link } from 'react-router-dom';  // For navigation between routes
+import { Link, useNavigate } from 'react-router-dom';  // For navigation between routes
+import { useAuth } from '../context/AuthContext'; // Import useAuth
 
 interface NavItem {
     name: string;
@@ -18,7 +19,9 @@ const Navbar: React.FC<NavbarProps> = () => {
     const [cartAnimation, setCartAnimation] = useState<boolean>(false);
 
     // Authentication state (use real authentication logic later)
-    const [isAuthenticated, setIsAuthenticated] = useState(false); // Assume user is not logged in initially
+    const { isAuthenticated, logout } = useAuth(); // Use useAuth to get authentication state and logout function
+    const navigate = useNavigate(); // To navigate after logout
+
 
     const navItems: NavItem[] = [
         { name: 'Home', path: '/' },
@@ -26,6 +29,8 @@ const Navbar: React.FC<NavbarProps> = () => {
         { name: 'Offers', path: '/offers' },
         { name: 'About', path: '/about' }
     ];
+
+
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -37,6 +42,12 @@ const Navbar: React.FC<NavbarProps> = () => {
             setTimeout(() => setCartAnimation(false), 1000); // Reset animation after 1 second
         }
     }, [cartCount]);
+
+
+    const handleLogout = () => {
+        logout(); // Use the logout function from AuthContext
+        navigate('/');
+    };
 
     const NavLink: React.FC<{ name: string; path: string }> = ({ name, path }) => (
         <li className="relative group">
@@ -101,7 +112,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                     </Link>
                 ) : (
                     <button
-                        onClick={() => setIsAuthenticated(false)} // For logout (just toggling for demo)
+                        onClick={handleLogout} // For logout (just toggling for demo)
                         className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
                     >
                         Logout

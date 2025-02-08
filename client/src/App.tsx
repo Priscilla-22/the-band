@@ -10,13 +10,16 @@ import Testimonials from "./components/Testimonials";
 import ProductDetail from "./components/ProductDetails";
 import AdminLogin from "./components/AdminLogin";
 import AdminDashboard from "./components/AdminDashboard";
+import { AuthProvider } from './context/AuthContext';
 
 const App: React.FC = () => {
     return (
         <ProductProvider>
-            <Router>
-                <MainApp />
-            </Router>
+            <AuthProvider> {/* Wrap the whole app in AuthProvider so that `useAuth` can be used globally */}
+                <Router>
+                    <MainApp />
+                </Router>
+            </AuthProvider>
         </ProductProvider>
     );
 };
