@@ -1,4 +1,7 @@
+// src/components/Navbar.tsx
 import React, { useState } from 'react';
+
+
 
 // Type for each navigation item
 interface NavItem {

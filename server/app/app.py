@@ -71,6 +71,20 @@ def create_app():
         db.session.commit()
         return jsonify({'message': 'Product added!'}), 201
 
+    @app.route('/api/products/<int:id>', methods=['GET'])
+    def get_product(id):
+        product = Product.query.get(id)
+        if product:
+            return jsonify({
+                'id': product.id,
+                'name': product.name,
+                'description': product.description,
+                'price': product.price,
+                'image_url': product.image_url
+            })
+        return jsonify({'message': 'Product not found'}), 404
+
+
     @app.route('/api/products/<int:id>', methods=['PUT'])
     def update_product(id):
         data = request.get_json()
