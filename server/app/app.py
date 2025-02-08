@@ -15,6 +15,14 @@ class Product(db.Model):
     price = db.Column(db.Float, nullable=False)
     image_url = db.Column(db.String(300), nullable=True)
 
+class Promotion(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(120), nullable=False)
+    description = db.Column(db.String(500), nullable=True)
+    link = db.Column(db.String(300), nullable=True)
+    bg_color = db.Column(db.String(20), nullable=False)  # Background color for the promotion (red, yellow, etc.)
+    text_color = db.Column(db.String(20), nullable=False)
+
 def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///products.db'
@@ -73,6 +81,18 @@ def create_app():
             db.session.commit()
             return jsonify({'message': 'Product deleted!'}), 200
         return jsonify({'message': 'Product not found'}), 404
+
+    @app.route('/api/promotions', methods=['GET'])
+    def get_promotions():
+        promotions = Promotion.query.all()
+        return jsonify([{
+            'id': p.id,
+            'title': p.title,
+            'description': p.description,
+            'link': p.link,
+            'bg_color': p.bg_color,
+            'text_color': p.text_color
+        } for p in promotions])
 
     return app
 

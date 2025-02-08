@@ -1,130 +1,69 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import config from "../config";
 
 const PromotionalBanner: React.FC = () => {
+    const [promotions, setPromotions] = useState<any[]>([]);
     const scrollRef = useRef<HTMLDivElement | null>(null);
+    const [isScrolling, setIsScrolling] = useState(true);
 
-    // Automatically scroll every 3 seconds
     useEffect(() => {
+        fetch(`${config.BASE_URL}/promotions`)
+            .then((response) => response.json())
+            .then((data) => {
+                setPromotions(data);
+            });
+
         const interval = setInterval(() => {
-            if (scrollRef.current) {
+            if (scrollRef.current && isScrolling) {
                 const scrollWidth = scrollRef.current.scrollWidth;
                 const scrollLeft = scrollRef.current.scrollLeft;
+                const clientWidth = scrollRef.current.clientWidth;
 
-                // Scroll when the right end is reached
-                if (scrollLeft + scrollRef.current.offsetWidth >= scrollWidth) {
-                    scrollRef.current.scrollTo({ left: 0, behavior: "smooth" });
+                // If we have reached the end, reset to the start
+                if (scrollLeft + clientWidth >= scrollWidth) {
+                    scrollRef.current.scrollTo({ left: 0, behavior: "auto" });
                 } else {
                     scrollRef.current.scrollBy({ left: 300, behavior: "smooth" });
                 }
             }
-        }, 3000); // Scroll every 3 seconds
+        }, 2000); // Scroll every 2 seconds
 
         return () => clearInterval(interval); // Cleanup on unmount
-    }, []);
+    }, [isScrolling]);
+
+    const duplicatePromotions = [...promotions, ...promotions]; // Duplicate the promotions to create a loop effect
 
     return (
         <div className="absolute bottom-0 left-0 right-0 px-6 py-4 pb-20">
             {/* Scrollable Container */}
             <div
                 ref={scrollRef}
-                className="flex overflow-x-auto gap-8 mx-auto max-w-4xl scrollbar-hide snap-x snap-mandatory"
+                className="flex gap-8 mx-auto max-w-4xl snap-x snap-mandatory"
+                style={{
+                    overflowX: "auto",  // Allow scrolling
+                    scrollbarWidth: "none",  // For Firefox
+                    msOverflowStyle: "none",  // For IE
+                }}
+                onMouseEnter={() => setIsScrolling(false)} // Pause scrolling on hover
+                onMouseLeave={() => setIsScrolling(true)} // Resume scrolling when not hovering
             >
-                {/* Promotion 1 */}
-                <div className="min-w-[calc(50%-16px)] bg-red-600 p-6 rounded-lg shadow-lg snap-start">
-                    <h3 className="text-2xl font-bold text-white">50% OFF!</h3>
-                    <p className="mt-2 text-gray-300">Save big on Black Friday deals.</p>
-                    <a
-                        href="/offers"
-                        className="mt-4 bg-white text-black py-2 px-4 rounded-full font-semibold hover:bg-gray-200"
+                {duplicatePromotions.map((promotion, index) => (
+                    <div
+                        key={`promotion-${index}`}
+                        className={`min-w-[calc(50%-16px)] p-6 rounded-lg shadow-lg snap-start ${promotion.bg_color}`}
                     >
-                        View Offers
-                    </a>
-                </div>
-
-                {/* Promotion 2 */}
-                <div className="min-w-[calc(50%-16px)] bg-yellow-400 p-6 rounded-lg shadow-lg snap-start">
-                    <h3 className="text-2xl font-bold text-black">Buy 1 Get 1 Free!</h3>
-                    <p className="mt-2 text-gray-800">Amazing offer on shoes & accessories.</p>
-                    <a
-                        href="/offers"
-                        className="mt-4 bg-black text-white py-2 px-4 rounded-full font-semibold hover:bg-gray-700"
-                    >
-                        Shop Now
-                    </a>
-                </div>
-
-                {/* Promotion 3 */}
-                <div className="min-w-[calc(50%-16px)] bg-green-500 p-6 rounded-lg shadow-lg snap-start">
-                    <h3 className="text-2xl font-bold text-white">Limited Time!</h3>
-                    <p className="mt-2 text-gray-300">Get exclusive discounts this weekend.</p>
-                    <a
-                        href="/offers"
-                        className="mt-4 bg-white text-black py-2 px-4 rounded-full font-semibold hover:bg-gray-200"
-                    >
-                        Explore Now
-                    </a>
-                </div>
-
-                {/* Promotion 4 */}
-                <div className="min-w-[calc(50%-16px)] bg-blue-500 p-6 rounded-lg shadow-lg snap-start">
-                    <h3 className="text-2xl font-bold text-white">Free Shipping</h3>
-                    <p className="mt-2 text-gray-300">Enjoy free shipping on all orders above $50!</p>
-                    <a
-                        href="/offers"
-                        className="mt-4 bg-white text-black py-2 px-4 rounded-full font-semibold hover:bg-gray-200"
-                    >
-                        Learn More
-                    </a>
-                </div>
-
-                {/* Duplicate Promotions for Continuous Scrolling */}
-                {/* Promotion 1 */}
-                <div className="min-w-[calc(50%-16px)] bg-red-600 p-6 rounded-lg shadow-lg snap-start">
-                    <h3 className="text-2xl font-bold text-white">50% OFF!</h3>
-                    <p className="mt-2 text-gray-300">Save big on Black Friday deals.</p>
-                    <a
-                        href="/offers"
-                        className="mt-4 bg-white text-black py-2 px-4 rounded-full font-semibold hover:bg-gray-200"
-                    >
-                        View Offers
-                    </a>
-                </div>
-
-                {/* Promotion 2 */}
-                <div className="min-w-[calc(50%-16px)] bg-yellow-400 p-6 rounded-lg shadow-lg snap-start">
-                    <h3 className="text-2xl font-bold text-black">Buy 1 Get 1 Free!</h3>
-                    <p className="mt-2 text-gray-800">Amazing offer on shoes & accessories.</p>
-                    <a
-                        href="/offers"
-                        className="mt-4 bg-black text-white py-2 px-4 rounded-full font-semibold hover:bg-gray-700"
-                    >
-                        Shop Now
-                    </a>
-                </div>
-
-                {/* Promotion 3 */}
-                <div className="min-w-[calc(50%-16px)] bg-green-500 p-6 rounded-lg shadow-lg snap-start">
-                    <h3 className="text-2xl font-bold text-white">Limited Time!</h3>
-                    <p className="mt-2 text-gray-300">Get exclusive discounts this weekend.</p>
-                    <a
-                        href="/offers"
-                        className="mt-4 bg-white text-black py-2 px-4 rounded-full font-semibold hover:bg-gray-200"
-                    >
-                        Explore Now
-                    </a>
-                </div>
-
-                {/* Promotion 4 */}
-                <div className="min-w-[calc(50%-16px)] bg-blue-500 p-6 rounded-lg shadow-lg snap-start">
-                    <h3 className="text-2xl font-bold text-white">Free Shipping</h3>
-                    <p className="mt-2 text-gray-300">Enjoy free shipping on all orders above $50!</p>
-                    <a
-                        href="/offers"
-                        className="mt-4 bg-white text-black py-2 px-4 rounded-full font-semibold hover:bg-gray-200"
-                    >
-                        Learn More
-                    </a>
-                </div>
+                        <h3 className={`text-2xl font-bold ${promotion.text_color}`}>
+                            {promotion.title}
+                        </h3>
+                        <p className="mt-2 text-gray-300">{promotion.description}</p>
+                        <a
+                            href={promotion.link}
+                            className="mt-4 bg-white text-black py-2 px-4 rounded-full font-semibold hover:bg-gray-200"
+                        >
+                            View Offers
+                        </a>
+                    </div>
+                ))}
             </div>
         </div>
     );
