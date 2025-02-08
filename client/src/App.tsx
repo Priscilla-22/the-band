@@ -7,14 +7,17 @@ import Footer from './components/Footer';
 import { ProductProvider, useProductContext } from './context/ProductContext';
 import HeroSection from "./components/HeroSection";
 import Testimonials from "./components/Testimonials";
-import ProductDetail from "./components/ProductDetails";
+import ProductDetail from "./pages/ProductDetails";
 import AdminLogin from "./components/AdminLogin";
-import AdminDashboard from "./components/AdminDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
 import { AuthProvider } from './context/AuthContext';
 import ProductManagement from "./components/ProductManagement";
-import CreateProduct from "./components/CreateProduct";
+import CreateProduct from "./pages/CreateProduct";
 import AdminLayout from "./components/AdminLayout";
-import AboutUs from "./components/AboutUs"; // Import the AdminLayout component
+import AboutUs from "./pages/AboutUs";
+import ProductsPage from "./pages/ProductsPage";
+import ProductListingPage from "./pages/ProductsPage";
+import OfferPage from "./pages/Offers"; // Import the AdminLayout component
 
 const App: React.FC = () => {
     return (
@@ -52,6 +55,8 @@ const MainApp: React.FC = () => {
                     } />
 
                     <Route path="/about" element={<AboutUs />} />  {/* Add About Us route */}
+                    <Route path="/products" element={<ProductListingPage />} />
+                    <Route path="/offers" element={<OfferPage />} />
 
 
                     {/* Product Detail Page Route */}

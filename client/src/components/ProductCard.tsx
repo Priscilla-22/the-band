@@ -15,7 +15,7 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     return (
-        <div className="bg-black text-white p-4 rounded-lg shadow-lg w-full sm:w-80 md:w-60 lg:w-48 m-4">
+        <div className="bg-black text-white p-4 rounded-lg shadow-lg w-full sm:w-80 md:w-60 lg:w-72 m-4">
             <Link to={`/product/${product.id}`} className="block">
                 <img src={product.image_url} alt={product.name} className="w-full h-48 object-cover rounded-md mb-4" />
                 <h3 className="text-lg font-semibold">{product.name}</h3>

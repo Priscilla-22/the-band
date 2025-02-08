@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Sidebar from './Sidebar'; // Import Sidebar component
-import DashboardCharts from './DashboardCharts'; // Import DashboardCharts component
+import Sidebar from '../components/Sidebar'; // Import Sidebar component
+import DashboardCharts from '../components/DashboardCharts'; // Import DashboardCharts component
 
 interface Sale {
     product_id: number;
