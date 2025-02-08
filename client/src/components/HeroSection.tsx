@@ -1,16 +1,20 @@
+// src/components/HeroSection.tsx
+
 import React from "react";
+import PromotionalBanner from "./PromotionalBanner"; // Import the promotional banner
 
 const HeroSection: React.FC = () => {
     return (
-        <section className="relative w-full h-screen bg-cover bg-center flex items-center justify-center px-6 md:px-12"
-                 style={{ backgroundImage: `url('/images/rnbb.jpeg')` }} // Background Image
+        <section
+            className="relative w-full h-screen bg-cover bg-center flex items-center justify-center px-6 md:px-12"
+            style={{ backgroundImage: `url('/images/rnbb.jpeg')` }} // Background Image
         >
             {/* Dark Overlay to Ensure Text Visibility */}
             <div className="absolute inset-0 bg-black/70"></div>
 
             {/* Content */}
             <div className="relative text-center text-white">
-                <h1 className="text-5xl md:text-7xl font-extrabold uppercase">
+                <h1 className="text-5xl md:text-7xl font-extrabold uppercase transform skew-x-12">
                     <span className="text-white">Black</span>{" "}
                     <span className="text-red-500">Friday</span>
                 </h1>
@@ -38,6 +42,9 @@ const HeroSection: React.FC = () => {
                     <i className="fab fa-twitter text-red-500 text-xl cursor-pointer"></i>
                 </div>
             </div>
+
+            {/* Promotional Banner */}
+            <PromotionalBanner /> {/* Add the new component here */}
 
             {/* Decorative Diagonal Lines */}
             <div className="absolute top-0 left-0 w-full h-full flex flex-col">
