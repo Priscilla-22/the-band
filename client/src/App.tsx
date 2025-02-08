@@ -11,11 +11,14 @@ import ProductDetail from "./components/ProductDetails";
 import AdminLogin from "./components/AdminLogin";
 import AdminDashboard from "./components/AdminDashboard";
 import { AuthProvider } from './context/AuthContext';
+import ProductManagement from "./components/ProductManagement";
+import CreateProduct from "./components/CreateProduct";
+import AdminLayout from "./components/AdminLayout"; // Import the AdminLayout component
 
 const App: React.FC = () => {
     return (
         <ProductProvider>
-            <AuthProvider> {/* Wrap the whole app in AuthProvider so that `useAuth` can be used globally */}
+            <AuthProvider>
                 <Router>
                     <MainApp />
                 </Router>
@@ -28,36 +31,50 @@ const MainApp: React.FC = () => {
     const { products, addToCart, cartCount } = useProductContext();
 
     return (
-        <div className="App">
+        <div className="App flex flex-col min-h-screen">
             <Navbar cartCount={cartCount} />
 
-            <Routes>
-                {/* Homepage Route (with HeroSection, Product Card grid, and Testimonials) */}
-                <Route path="/" element={
-                    <>
-                        <HeroSection />
-                        <main className="container mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                            {products.map(product => (
-                                <ProductCard key={product.id} product={product}  />
-                            ))}
-                        </main>
-                        <Testimonials />
-                    </>
-                } />
+            {/* Main Content */}
+            <main className="flex-grow">
+                <Routes>
+                    {/* Homepage Route */}
+                    <Route path="/" element={
+                        <>
+                            <HeroSection />
+                            <div className="container mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                                {products.map(product => (
+                                    <ProductCard key={product.id} product={product} />
+                                ))}
+                            </div>
+                            <Testimonials />
+                        </>
+                    } />
 
-                {/* Product Detail Page Route (without HeroSection or Testimonials, directly below Navbar) */}
-                <Route path="/product/:id" element={
-                    <div className="product-detail-page">
-                        <ProductDetail />
-                    </div>
-                } />
-                <Route path="/login" element={<AdminLogin />} />
-                <Route path="/admin/dashboard" element={<AdminDashboard />} />
-            </Routes>
+                    {/* Product Detail Page Route */}
+                    <Route path="/product/:id" element={
+                        <div className="product-detail-page">
+                            <ProductDetail />
+                        </div>
+                    } />
 
+                    {/* Admin Login Route */}
+                    <Route path="/login" element={<AdminLogin />} />
+
+                    {/* Admin Routes Wrapped with AdminLayout */}
+                    <Route path="/admin" element={<AdminLayout />}>
+                        <Route path="dashboard" element={<AdminDashboard />} />
+                        <Route path="products" element={<ProductManagement />} />
+                        <Route path="create-product" element={<CreateProduct />} /> {/* Add Create Product Route */}
+
+                        {/* Add more admin routes here */}
+                    </Route>
+                </Routes>
+            </main>
+
+            {/* Footer */}
             <Footer />
         </div>
     );
-}
+};
 
 export default App;
