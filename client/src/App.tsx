@@ -8,6 +8,8 @@ import { ProductProvider, useProductContext } from './context/ProductContext';
 import HeroSection from "./components/HeroSection";
 import Testimonials from "./components/Testimonials";
 import ProductDetail from "./components/ProductDetails";
+import AdminLogin from "./components/AdminLogin";
+import AdminDashboard from "./components/AdminDashboard";
 
 const App: React.FC = () => {
     return (
@@ -46,6 +48,8 @@ const MainApp: React.FC = () => {
                         <ProductDetail />
                     </div>
                 } />
+                <Route path="/login" element={<AdminLogin />} />
+                <Route path="/admin/dashboard" element={<AdminDashboard />} />
             </Routes>
 
             <Footer />

@@ -1,10 +1,8 @@
 // src/components/Navbar.tsx
 import React, { useState } from 'react';
 import { useProductContext } from '../context/ProductContext';
+import { Link } from 'react-router-dom';  // For navigation between routes
 
-
-
-// Type for each navigation item
 interface NavItem {
     name: string;
     path: string;
@@ -19,7 +17,9 @@ const Navbar: React.FC<NavbarProps> = () => {
     const { cartCount } = useProductContext();
     const [cartAnimation, setCartAnimation] = useState<boolean>(false);
 
-    // Navigation items
+    // Authentication state (use real authentication logic later)
+    const [isAuthenticated, setIsAuthenticated] = useState(false); // Assume user is not logged in initially
+
     const navItems: NavItem[] = [
         { name: 'Home', path: '/' },
         { name: 'Products', path: '/products' },
@@ -27,12 +27,10 @@ const Navbar: React.FC<NavbarProps> = () => {
         { name: 'About', path: '/about' }
     ];
 
-    // Toggle mobile menu
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
-    // Trigger animation when the cart count changes
     React.useEffect(() => {
         if (cartCount > 0) {
             setCartAnimation(true);
@@ -40,7 +38,6 @@ const Navbar: React.FC<NavbarProps> = () => {
         }
     }, [cartCount]);
 
-    // Reusable component for each nav item with bouncing dots on hover
     const NavLink: React.FC<{ name: string; path: string }> = ({ name, path }) => (
         <li className="relative group">
             <a href={path} className="hover:text-gray-200 font-bold text-2xl mb-2 mr-8">{name}</a>
@@ -86,7 +83,6 @@ const Navbar: React.FC<NavbarProps> = () => {
                     </div>
 
                     {/* Cart Count (Inside the Cart Icon) */}
-                    {/* Cart Count */}
                     {cartCount > 0 && (
                         <span
                             className={`absolute top-0 right-0 w-5 h-5 bg-red-600 text-white text-xs rounded-full flex items-center justify-center ${cartAnimation ? 'animate-bounce' : ''}`}
@@ -95,6 +91,22 @@ const Navbar: React.FC<NavbarProps> = () => {
                         </span>
                     )}
                 </div>
+
+                {/* Login Button */}
+                {!isAuthenticated ? (
+                    <Link to="/login">
+                        <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                            Login
+                        </button>
+                    </Link>
+                ) : (
+                    <button
+                        onClick={() => setIsAuthenticated(false)} // For logout (just toggling for demo)
+                        className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+                    >
+                        Logout
+                    </button>
+                )}
             </div>
         </header>
     );

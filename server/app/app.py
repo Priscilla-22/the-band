@@ -1,14 +1,25 @@
 #server/app/app.py
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify,session, redirect, url_for
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from datetime import datetime
+from datetime import datetime,timedelta
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from werkzeug.security import check_password_hash
+import jwt
+
 
 
 # Initialize extensions
 db = SQLAlchemy()
 migrate = Migrate()
+
+# Admin User model
+class Admin(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(150), unique=True, nullable=False)
+    password = db.Column(db.String(150), nullable=False)
+
 
 # Define the Product model outside of create_app()
 class Product(db.Model):
@@ -42,14 +53,81 @@ def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///products.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SECRET_KEY'] = 'your_secret_key'  # This is required for session management
 
     # Initialize extensions
     db.init_app(app)
     migrate.init_app(app, db)
-    CORS(app)
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    CORS(app, resources={r'/*': {'origins': '*'}})
 
     with app.app_context():
         db.create_all()  # Ensures database tables exist
+
+        # Load the user
+    @login_manager.user_loader
+    def load_user(user_id):
+        return Admin.query.get(int(user_id))
+
+    # Create a JWT Token for authentication
+    def generate_token(admin):
+        token = jwt.encode(
+            {'user_id': admin.id, 'exp': datetime.utcnow() + timedelta(hours=1)},
+            app.config['SECRET_KEY'],
+            algorithm='HS256'
+        )
+        return token
+
+    # Admin login route (returns a JWT)
+    @app.route('/admin/login', methods=['POST'])
+    def admin_login():
+        data = request.get_json()
+        email = data.get('email')
+        password = data.get('password')
+
+        admin = Admin.query.filter_by(email=email).first()
+        if admin and check_password_hash(admin.password, password):
+            token = generate_token(admin)
+            return jsonify({"token": token}), 200
+        return jsonify({"message": "Invalid credentials"}), 401
+
+    # Token validation decorator
+    def token_required(f):
+        from functools import wraps
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            token = None
+            if 'Authorization' in request.headers:
+                token = request.headers['Authorization'].split(" ")[1]  # Get token from header
+
+            if not token:
+                return jsonify({'message': 'Token is missing!'}), 403
+
+            try:
+                decoded_token = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
+                current_user = Admin.query.get(decoded_token['user_id'])
+            except jwt.ExpiredSignatureError:
+                return jsonify({'message': 'Token has expired!'}), 401
+            except jwt.InvalidTokenError:
+                return jsonify({'message': 'Invalid token!'}), 401
+
+            return f(current_user, *args, **kwargs)
+        return decorated_function
+
+    # Admin logout route
+    @app.route('/admin/logout', methods=['POST'])
+    @login_required
+    def admin_logout():
+        logout_user()
+        return jsonify({"message": "Logged out successfully"}), 200
+
+    # Admin dashboard route (protected)
+    @app.route('/admin/dashboard', methods=['GET'])
+    @token_required
+    def admin_dashboard(current_user):
+        return jsonify({"message": f"Welcome to the admin dashboard, {current_user.email}"}), 200
+
 
     @app.route('/api/products', methods=['GET'])
     def get_products():

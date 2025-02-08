@@ -1,7 +1,14 @@
 # server/app/seed.py
-from app import create_app, db, Product,Promotion,Testimonial
+from app import create_app, db, Product,Promotion,Testimonial,Admin
 from datetime import datetime
+from werkzeug.security import generate_password_hash
 
+
+# Sample admin data
+admin_data = {
+    "email": "admin@theband.com",
+    "password": "admin"  # You will hash this password securely
+}
 
 # Sample products to add to the database
 products = [
@@ -75,6 +82,7 @@ def clear_existing_data(app):
     with app.app_context():
         Product.query.delete()  # Remove all existing products
         Promotion.query.delete()
+        Admin.query.delete()
         db.session.commit()
 
 def seed_db():
@@ -85,6 +93,13 @@ def seed_db():
 
     # Insert new data
     with app.app_context():
+        admin = Admin(
+            email=admin_data["email"],
+            password=generate_password_hash(admin_data["password"])  # Hash the password
+        )
+        db.session.add(admin)
+
+
         # Efficient bulk insert for large datasets
         db.session.bulk_insert_mappings(Product, products)
         db.session.bulk_insert_mappings(Promotion, promotions)
