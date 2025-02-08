@@ -1,7 +1,10 @@
+#server/app/app.py
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from datetime import datetime
+
 
 # Initialize extensions
 db = SQLAlchemy()
@@ -22,6 +25,14 @@ class Promotion(db.Model):
     link = db.Column(db.String(300), nullable=True)
     bg_color = db.Column(db.String(20), nullable=False)  # Background color for the promotion (red, yellow, etc.)
     text_color = db.Column(db.String(20), nullable=False)
+
+class Testimonial(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    customer_name = db.Column(db.String(120), nullable=False)
+    review = db.Column(db.String(500), nullable=False)
+    rating = db.Column(db.Integer, nullable=False)  # rating out of 5
+    date = db.Column(db.DateTime, default=datetime.utcnow)
+    image_url = db.Column(db.String(300), nullable=True)
 
 def create_app():
     app = Flask(__name__)
@@ -93,6 +104,21 @@ def create_app():
             'bg_color': p.bg_color,
             'text_color': p.text_color
         } for p in promotions])
+
+
+    # Add a new API endpoint to fetch testimonials
+    @app.route('/api/testimonials', methods=['GET'])
+    def get_testimonials():
+        testimonials = Testimonial.query.all()
+        return jsonify([{
+            'id': t.id,
+            'customer_name': t.customer_name,
+            'review': t.review,
+            'rating': t.rating,
+            'date': t.date.strftime('%Y-%m-%d'),
+            'image_url':t.image_url
+        } for t in testimonials])
+
 
     return app
 

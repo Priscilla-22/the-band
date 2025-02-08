@@ -1,5 +1,7 @@
-# server/seed.py
-from app import create_app, db, Product,Promotion
+# server/app/seed.py
+from app import create_app, db, Product,Promotion,Testimonial
+from datetime import datetime
+
 
 # Sample products to add to the database
 products = [
@@ -16,6 +18,14 @@ promotions = [
     {"title": "Buy 1 Get 1 Free!", "description": "Amazing offer on shoes & accessories.", "link": "/offers", "bg_color": "bg-yellow-400", "text_color": "text-black"},
     {"title": "Limited Time!", "description": "Get exclusive discounts this weekend.", "link": "/offers", "bg_color": "bg-green-500", "text_color": "text-white"},
     {"title": "Free Shipping", "description": "Enjoy free shipping on all orders above $50!", "link": "/offers", "bg_color": "bg-blue-500", "text_color": "text-white"}
+]
+
+# Sample testimonials to add to the database
+testimonials = [
+    {"customer_name": "John Doe", "review": "Great product, highly recommend!", "rating": 5, "date": datetime.utcnow(),"image_url": "https://ik.imagekit.io/lzdm7pnd7/Screenshot%20from%202025-02-08%2012-26-56.png?updatedAt=1739006843261"},
+    {"customer_name": "Jane Smith", "review": "Good quality, but a bit expensive.", "rating": 4, "date": datetime.utcnow(),"image_url": "https://ik.imagekit.io/lzdm7pnd7/Screenshot%20from%202025-02-08%2012-26-56.png?updatedAt=1739006843261"},
+    {"customer_name": "Sam Johnson", "review": "Not satisfied with the product, I expected better.", "rating": 2, "date": datetime.utcnow(),"image_url": "https://ik.imagekit.io/lzdm7pnd7/Screenshot%20from%202025-02-08%2012-26-56.png?updatedAt=1739006843261"},
+    {"customer_name": "Emily Davis", "review": "Amazing service and quality, will buy again!", "rating": 5, "date": datetime.utcnow(),"image_url": "https://ik.imagekit.io/lzdm7pnd7/Screenshot%20from%202025-02-08%2012-26-56.png?updatedAt=1739006843261"}
 ]
 
 
@@ -37,6 +47,7 @@ def seed_db():
         # Efficient bulk insert for large datasets
         db.session.bulk_insert_mappings(Product, products)
         db.session.bulk_insert_mappings(Promotion, promotions)
+        db.session.bulk_insert_mappings(Testimonial, testimonials)
         db.session.commit()
         print("✅ Database seeded successfully!")
 

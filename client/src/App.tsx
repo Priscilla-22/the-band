@@ -6,6 +6,7 @@ import ProductCard from './components/ProductCard';
 import Footer from './components/Footer';
 import { ProductProvider, useProductContext } from './context/ProductContext';
 import HeroSection from "./components/HeroSection";
+import Testimonials from "./components/Testimonials";
 
 const App: React.FC = () => {
   return (
@@ -27,6 +28,7 @@ const MainApp: React.FC = () => {
               <ProductCard key={product.id} product={product} addToCart={addToCart} />
           ))}
         </main>
+          <Testimonials />
         <Footer />
       </div>
   );
