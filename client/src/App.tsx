@@ -67,7 +67,7 @@ const MainApp: React.FC = () => {
                     } />
 
                     {/* Admin Login Route */}
-                    <Route path="/login" element={<AdminLogin />} />
+                    <Route path="/login" element={<AdminLogin onSuccess={() => {}}  />} />
 
                     {/* Admin Routes Wrapped with AdminLayout */}
                     <Route path="/admin" element={<AdminLayout />}>

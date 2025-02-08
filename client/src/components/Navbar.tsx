@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useProductContext } from '../context/ProductContext';
-import { Link, useNavigate } from 'react-router-dom';  // For navigation between routes
-import { useAuth } from '../context/AuthContext'; // Import useAuth
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import Modal from './Modal'; // Import the Modal component
+import AdminLogin from './AdminLogin'; // Import the AdminLogin component
 
 interface NavItem {
     name: string;
@@ -14,12 +16,11 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // State for modal visibility
     const { cartCount } = useProductContext();
     const [cartAnimation, setCartAnimation] = useState<boolean>(false);
-
-    // Authentication state (use real authentication logic later)
-    const { isAuthenticated, logout } = useAuth(); // Use useAuth to get authentication state and logout function
-    const navigate = useNavigate(); // To navigate after logout
+    const { isAuthenticated, logout } = useAuth();
+    const navigate = useNavigate();
 
     // Define navigation items
     const navItems: NavItem[] = [
@@ -46,7 +47,7 @@ const Navbar: React.FC<NavbarProps> = () => {
     }, [cartCount]);
 
     const handleLogout = () => {
-        logout(); // Use the logout function from AuthContext
+        logout();
         navigate('/');
     };
 
@@ -66,7 +67,7 @@ const Navbar: React.FC<NavbarProps> = () => {
             {/* Logo Section */}
             <div className="flex items-center space-x-2">
                 <img
-                    src="/logo192.png"  // Public folder path
+                    src="/logo192.png"
                     alt="Logo"
                     className="w-10 h-10"
                 />
@@ -86,7 +87,7 @@ const Navbar: React.FC<NavbarProps> = () => {
             <div className="flex items-center space-x-4">
                 {/* Mobile Hamburger Menu */}
                 <div className="md:hidden text-xl cursor-pointer" onClick={toggleMobileMenu}>
-                    <i className="fas fa-bars"></i> {/* Hamburger icon */}
+                    <i className="fas fa-bars"></i>
                 </div>
 
                 <div className="relative">
@@ -106,20 +107,26 @@ const Navbar: React.FC<NavbarProps> = () => {
 
                 {/* Login Button */}
                 {!isAuthenticated ? (
-                    <Link to="/login">
-                        <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-                            Login
-                        </button>
-                    </Link>
+                    <button
+                        onClick={() => setIsLoginModalOpen(true)} // Open the login modal
+                        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                    >
+                        Login
+                    </button>
                 ) : (
                     <button
-                        onClick={handleLogout} // For logout (just toggling for demo)
+                        onClick={handleLogout}
                         className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
                     >
                         Logout
                     </button>
                 )}
             </div>
+
+            {/* Login Modal */}
+            <Modal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)}>
+                <AdminLogin onSuccess={() => setIsLoginModalOpen(false)} />
+            </Modal>
         </header>
     );
 };
