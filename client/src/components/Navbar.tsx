@@ -29,7 +29,7 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
     // Reusable component for each nav item with bouncing dots on hover
     const NavLink: React.FC<{ name: string; path: string }> = ({ name, path }) => (
         <li className="relative group">
-            <a href={path} className="hover:text-gray-200 mb-2">{name}</a>
+            <a href={path} className="hover:text-gray-200 font-bold text-2xl mb-2 mr-8">{name}</a>
             <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex space-x-1 group-hover:opacity-100 opacity-0 transition-all duration-300">
                 <span className="w-1.5 h-1.5 rounded-full bg-white animate-bounce"></span>
                 <span className="w-1.5 h-1.5 rounded-full bg-white animate-bounce200"></span>
@@ -39,7 +39,7 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
     );
 
     return (
-        <header className="absolute top-0 left-0 w-full bg-black/40 text-white p-4 flex justify-between items-center z-50">
+        <header className="absolute top-0 left-0 w-full bg-black/40 text-white p-8 flex justify-between items-center z-50 font-delius">
             {/* Logo Section */}
             <div className="flex items-center space-x-2">
                 <img
