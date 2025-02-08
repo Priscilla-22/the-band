@@ -163,7 +163,10 @@ def create_app():
             name=data['name'],
             description=data['description'],
             price=data['price'],
-            image_url=data['image_url']
+            image_url=data['image_url'],
+            ring_size_options=data.get('ring_size_options', []),
+            finishing_options=data.get('finishing_options', []),
+            more_details=data.get('more_details', '')
         )
         db.session.add(new_product)
         db.session.commit()
@@ -191,10 +194,13 @@ def create_app():
         data = request.get_json()
         product = Product.query.get(id)
         if product:
-            product.name = data['name']
-            product.description = data['description']
-            product.price = data['price']
-            product.image_url = data['image_url']
+            product.name = data.get('name', product.name)
+            product.description = data.get('description', product.description)
+            product.price = data.get('price', product.price)
+            product.image_url = data.get('image_url', product.image_url)
+            product.ring_size_options = data.get('ring_size_options', product.ring_size_options)
+            product.finishing_options = data.get('finishing_options', product.finishing_options)
+            product.more_details = data.get('more_details', product.more_details)
             db.session.commit()
             return jsonify({'message': 'Product updated!'}), 200
         return jsonify({'message': 'Product not found'}), 404
