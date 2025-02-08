@@ -39,7 +39,7 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
     );
 
     return (
-        <header className="bg-red-600 text-white p-4 flex justify-between items-center">
+        <header className="absolute top-0 left-0 w-full bg-black/40 text-white p-4 flex justify-between items-center z-50">
             {/* Logo Section */}
             <div className="flex items-center space-x-2">
                 <img
@@ -66,8 +66,17 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
                     <i className="fas fa-bars"></i> {/* Hamburger icon */}
                 </div>
 
-                <div className="bg-black px-4 py-2 rounded-full">
-                    <i className="fa fa-shopping-cart"></i> {cartCount}
+                <div className="relative">
+                    <div className="bg-black px-4 py-2 rounded-full">
+                        <i className="fa fa-shopping-cart"></i>
+                    </div>
+
+                    {/* Cart Count (Inside the Cart Icon) */}
+                    {cartCount > 0 && (
+                        <span className="absolute top-0 right-0 w-5 h-5 bg-red-600 text-white text-xs rounded-full flex items-center justify-center">
+                            {cartCount}
+                        </span>
+                    )}
                 </div>
             </div>
         </header>
