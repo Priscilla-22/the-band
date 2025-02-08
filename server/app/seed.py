@@ -5,12 +5,53 @@ from datetime import datetime
 
 # Sample products to add to the database
 products = [
-    {"name": "Laptop", "description": "A powerful laptop", "price": 999.99, "image_url": "https://ik.imagekit.io/lzdm7pnd7/Screenshot%20from%202025-02-08%2009-09-27.png?updatedAt=1738995042036"},
-    {"name": "Smartphone", "description": "A high-end smartphone", "price": 599.99, "image_url": "https://ik.imagekit.io/lzdm7pnd7/Screenshot%20from%202025-02-08%2009-09-27.png?updatedAt=1738995042036"},
-    {"name": "Headphones", "description": "Noise-cancelling headphones", "price": 199.99, "image_url": "https://ik.imagekit.io/lzdm7pnd7/Screenshot%20from%202025-02-08%2009-09-27.png?updatedAt=1738995042036"},
-    {"name": "Keyboard", "description": "Mechanical keyboard", "price": 89.99, "image_url": "https://ik.imagekit.io/lzdm7pnd7/Screenshot%20from%202025-02-08%2009-09-27.png?updatedAt=1738995042036"},
-    {"name": "Mouse", "description": "Ergonomic mouse", "price": 49.99, "image_url": "https://ik.imagekit.io/lzdm7pnd7/Screenshot%20from%202025-02-08%2009-09-27.png?updatedAt=1738995042036"}
+    {
+        "name": "Laptop",
+        "description": "A powerful laptop",
+        "price": 999.99,
+        "image_url": "https://ik.imagekit.io/lzdm7pnd7/Screenshot%20from%202025-02-08%2009-09-27.png?updatedAt=1738995042036",
+        "ring_size_options": ["Pick your size", "6", "7", "8", "9", "10"],
+        "finishing_options": ["Shiny", "Matte", "Glossy"],
+        "more_details": "This laptop is powered by the latest Intel Core i9 processor, offering lightning-fast speed and multitasking capabilities. It comes equipped with 16GB of RAM, ensuring smooth performance even during the most demanding tasks. The laptop boasts a high-resolution 15.6-inch display, perfect for watching movies, editing photos, and gaming. With its slim design and long-lasting battery, you can take it with you wherever you go. Whether you're a student, professional, or gamer, this laptop has everything you need to stay productive and entertained."
+    },
+    {
+        "name": "Smartphone",
+        "description": "A high-end smartphone",
+        "price": 599.99,
+        "image_url": "https://ik.imagekit.io/lzdm7pnd7/Screenshot%20from%202025-02-08%2009-09-27.png?updatedAt=1738995042036",
+        "ring_size_options": ["Pick your size", "16", "18", "20", "22"],
+        "finishing_options": ["Shiny", "Matte", "Brushed"],
+        "more_details": "Experience the latest in smartphone technology with the new high-end Smartphone. Featuring a 6.5-inch Super AMOLED display, the screen delivers crisp, vibrant colors and true blacks, perfect for viewing photos and videos. Powered by a fast processor and 8GB of RAM, it provides seamless multitasking and smooth gaming performance. The 12MP camera captures stunning photos, while the large battery ensures you stay connected all day long. This smartphone also supports 5G, making it future-proof and ready for the next generation of mobile connectivity."
+    },
+    {
+        "name": "Headphones",
+        "description": "Noise-cancelling headphones",
+        "price": 199.99,
+        "image_url": "https://ik.imagekit.io/lzdm7pnd7/Screenshot%20from%202025-02-08%2009-09-27.png?updatedAt=1738995042036",
+        "ring_size_options": ["Pick your size", "Small", "Medium", "Large"],
+        "finishing_options": ["Shiny", "Matte"],
+        "more_details": "These noise-cancelling headphones are designed to deliver an immersive audio experience. The advanced noise-canceling technology blocks out ambient sounds, allowing you to focus on your music, podcasts, or calls. The comfortable over-ear design ensures long-lasting wear without discomfort. With high-fidelity sound and deep bass, these headphones are perfect for audiophiles and casual listeners alike. The built-in microphone and touch controls make it easy to manage your music and calls without reaching for your device."
+    },
+    {
+        "name": "Keyboard",
+        "description": "Mechanical keyboard",
+        "price": 89.99,
+        "image_url": "https://ik.imagekit.io/lzdm7pnd7/Screenshot%20from%202025-02-08%2009-09-27.png?updatedAt=1738995042036",
+        "ring_size_options": ["Pick your size", "6", "7", "8", "9", "10"],
+        "finishing_options": ["Shiny", "Matte", "Glossy"],
+        "more_details": "This mechanical keyboard provides a satisfying typing experience with its responsive keys and audible feedback. The RGB backlighting adds a touch of flair to your workspace, with customizable colors and effects to match your style. The ergonomic design ensures comfort during long typing sessions, while the durable key switches ensure a long lifespan. Whether you're typing, gaming, or coding, this keyboard offers both style and performance, making it a must-have for any desk setup."
+    },
+    {
+        "name": "Mouse",
+        "description": "Ergonomic mouse",
+        "price": 49.99,
+        "image_url": "https://ik.imagekit.io/lzdm7pnd7/Screenshot%20from%202025-02-08%2009-09-27.png?updatedAt=1738995042036",
+        "ring_size_options": ["Pick your size", "Small", "Medium", "Large"],
+        "finishing_options": ["Shiny", "Matte"],
+        "more_details": "This ergonomic mouse is designed to provide comfort and precision for long hours of use. Its shape conforms to the natural curve of your hand, reducing strain on your wrist. The high-precision optical sensor ensures smooth tracking on various surfaces, making it perfect for work or gaming. The customizable buttons allow you to assign shortcuts for your favorite tasks, while the sleek design adds a modern touch to your workspace. Whether you're working from home or playing games, this mouse offers the perfect balance of comfort and functionality."
+    }
 ]
+
 
 # Sample promotions to add to the database
 promotions = [

@@ -17,6 +17,10 @@ class Product(db.Model):
     description = db.Column(db.String(500), nullable=True)
     price = db.Column(db.Float, nullable=False)
     image_url = db.Column(db.String(300), nullable=True)
+    ring_size_options = db.Column(db.JSON, nullable=True)  # Add ring size options as a list
+    finishing_options = db.Column(db.JSON, nullable=True)
+    more_details = db.Column(db.String(1000), nullable=True)  # New column to hold additional details
+
 
 class Promotion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -80,7 +84,10 @@ def create_app():
                 'name': product.name,
                 'description': product.description,
                 'price': product.price,
-                'image_url': product.image_url
+                'image_url': product.image_url,
+                'ring_size_options': product.ring_size_options,  # Return ring size options
+                'finishing_options': product.finishing_options,
+                'more_details':product.more_details
             })
         return jsonify({'message': 'Product not found'}), 404
 

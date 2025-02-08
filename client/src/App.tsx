@@ -1,6 +1,5 @@
-// src/App.tsx
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Import Router components
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import ProductCard from './components/ProductCard';
@@ -11,40 +10,47 @@ import Testimonials from "./components/Testimonials";
 import ProductDetail from "./components/ProductDetails";
 
 const App: React.FC = () => {
-  return (
-      <ProductProvider>
-          <Router>
-          <MainApp />
-          </Router>
-      </ProductProvider>
-  );
+    return (
+        <ProductProvider>
+            <Router>
+                <MainApp />
+            </Router>
+        </ProductProvider>
+    );
 };
 
 const MainApp: React.FC = () => {
-  const { products, addToCart, cartCount } = useProductContext();
+    const { products, addToCart, cartCount } = useProductContext();
 
-  return (
-      <div className="App">
-        <Navbar cartCount={cartCount} />
-          <HeroSection />
-          <Routes> {/* Routes for the app */}
-              {/* Add Route for the homepage */}
-              <Route path="/" element={
-                  <main className="container mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                      {products.map(product => (
-                          <ProductCard key={product.id} product={product} addToCart={addToCart} />
-                      ))}
-                  </main>
-              } />
+    return (
+        <div className="App">
+            <Navbar cartCount={cartCount} />
 
-              {/* Add Route for Product Detail Page */}
-              <Route path="/product/:id" element={<ProductDetail />} />
-          </Routes>
+            <Routes>
+                {/* Homepage Route (with HeroSection, Product Card grid, and Testimonials) */}
+                <Route path="/" element={
+                    <>
+                        <HeroSection />
+                        <main className="container mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                            {products.map(product => (
+                                <ProductCard key={product.id} product={product} addToCart={addToCart} />
+                            ))}
+                        </main>
+                        <Testimonials />
+                    </>
+                } />
 
-          <Testimonials />
-        <Footer />
-      </div>
-  );
+                {/* Product Detail Page Route (without HeroSection or Testimonials, directly below Navbar) */}
+                <Route path="/product/:id" element={
+                    <div className="product-detail-page">
+                        <ProductDetail />
+                    </div>
+                } />
+            </Routes>
+
+            <Footer />
+        </div>
+    );
 }
 
 export default App;
