@@ -1,5 +1,4 @@
-// src/components/Navbar.tsx
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useProductContext } from '../context/ProductContext';
 import { Link, useNavigate } from 'react-router-dom';  // For navigation between routes
 import { useAuth } from '../context/AuthContext'; // Import useAuth
@@ -22,15 +21,18 @@ const Navbar: React.FC<NavbarProps> = () => {
     const { isAuthenticated, logout } = useAuth(); // Use useAuth to get authentication state and logout function
     const navigate = useNavigate(); // To navigate after logout
 
-
+    // Define navigation items
     const navItems: NavItem[] = [
         { name: 'Home', path: '/' },
         { name: 'Products', path: '/products' },
         { name: 'Offers', path: '/offers' },
-        { name: 'About', path: '/about' }
+        { name: 'About', path: '/about' },
     ];
 
-
+    // Add "Dashboard" link if the user is authenticated
+    if (isAuthenticated) {
+        navItems.push({ name: 'Dashboard', path: '/admin/dashboard' });
+    }
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -42,7 +44,6 @@ const Navbar: React.FC<NavbarProps> = () => {
             setTimeout(() => setCartAnimation(false), 1000); // Reset animation after 1 second
         }
     }, [cartCount]);
-
 
     const handleLogout = () => {
         logout(); // Use the logout function from AuthContext
