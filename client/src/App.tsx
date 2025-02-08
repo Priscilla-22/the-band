@@ -13,7 +13,8 @@ import AdminDashboard from "./components/AdminDashboard";
 import { AuthProvider } from './context/AuthContext';
 import ProductManagement from "./components/ProductManagement";
 import CreateProduct from "./components/CreateProduct";
-import AdminLayout from "./components/AdminLayout"; // Import the AdminLayout component
+import AdminLayout from "./components/AdminLayout";
+import AboutUs from "./components/AboutUs"; // Import the AdminLayout component
 
 const App: React.FC = () => {
     return (
@@ -49,6 +50,9 @@ const MainApp: React.FC = () => {
                             <Testimonials />
                         </>
                     } />
+
+                    <Route path="/about" element={<AboutUs />} />  {/* Add About Us route */}
+
 
                     {/* Product Detail Page Route */}
                     <Route path="/product/:id" element={
