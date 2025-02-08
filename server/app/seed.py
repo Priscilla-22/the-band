@@ -1,7 +1,9 @@
 # server/app/seed.py
-from app import create_app, db, Product,Promotion,Testimonial,Admin
-from datetime import datetime
+from app import create_app, db, Product,Promotion,Testimonial,Admin, Sale, Inventory
+from datetime import datetime,timedelta
 from werkzeug.security import generate_password_hash
+import random
+
 
 
 # Sample admin data
@@ -77,12 +79,43 @@ testimonials = [
 ]
 
 
+# Generate dummy sales data
+def generate_sales_data():
+    sales = []
+    for i in range(1, 6):  # Assuming 5 products
+        for day in range(30):  # Last 30 days
+            quantity = random.randint(1, 10)
+            product = Product.query.get(i)
+            revenue = quantity * product.price
+            sales.append({
+                "product_id": i,
+                "quantity": quantity,
+                "revenue": revenue,
+                "sale_date": datetime.utcnow() - timedelta(days=day)
+            })
+    return sales
+
+# Generate dummy inventory data
+def generate_inventory_data():
+    inventory = []
+    for i in range(1, 6):  # Assuming 5 products
+        inventory.append({
+            "product_id": i,
+            "stock_quantity": random.randint(10, 100),
+            "last_updated": datetime.utcnow()
+        })
+    return inventory
+
+
+
 # Clear existing data
 def clear_existing_data(app):
     with app.app_context():
         Product.query.delete()  # Remove all existing products
         Promotion.query.delete()
         Admin.query.delete()
+        Sale.query.delete()
+        Inventory.query.delete()
         db.session.commit()
 
 def seed_db():
@@ -104,6 +137,13 @@ def seed_db():
         db.session.bulk_insert_mappings(Product, products)
         db.session.bulk_insert_mappings(Promotion, promotions)
         db.session.bulk_insert_mappings(Testimonial, testimonials)
+
+        # Add sales and inventory data
+        sales_data = generate_sales_data()
+        inventory_data = generate_inventory_data()
+        db.session.bulk_insert_mappings(Sale, sales_data)
+        db.session.bulk_insert_mappings(Inventory, inventory_data)
+
         db.session.commit()
         print("✅ Database seeded successfully!")
 

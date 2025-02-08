@@ -31,6 +31,7 @@ class Product(db.Model):
     ring_size_options = db.Column(db.JSON, nullable=True)  # Add ring size options as a list
     finishing_options = db.Column(db.JSON, nullable=True)
     more_details = db.Column(db.String(1000), nullable=True)  # New column to hold additional details
+    sales = db.relationship('Sale', backref='product', lazy=True)
 
 
 class Promotion(db.Model):
@@ -48,6 +49,21 @@ class Testimonial(db.Model):
     rating = db.Column(db.Integer, nullable=False)  # rating out of 5
     date = db.Column(db.DateTime, default=datetime.utcnow)
     image_url = db.Column(db.String(300), nullable=True)
+
+# Add these models to your existing models in app.py
+
+class Sale(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+    sale_date = db.Column(db.DateTime, default=datetime.utcnow)
+    revenue = db.Column(db.Float, nullable=False)  # Calculated as quantity * product price
+
+class Inventory(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    stock_quantity = db.Column(db.Integer, nullable=False)
+    last_updated = db.Column(db.DateTime, default=datetime.utcnow)
 
 def create_app():
     app = Flask(__name__)
@@ -218,6 +234,46 @@ def create_app():
             'image_url':t.image_url
         } for t in testimonials])
 
+
+    # Add these routes to your existing routes in app.py
+
+    @app.route('/api/analytics/sales', methods=['GET'])
+    @token_required
+    def get_sales_analytics(current_user):
+        # Fetch sales data for the last 30 days
+        sales = Sale.query.filter(Sale.sale_date >= datetime.utcnow() - timedelta(days=30)).all()
+        sales_data = [{
+            'date': sale.sale_date.strftime('%Y-%m-%d'),
+            'revenue': sale.revenue,
+            'product_id': sale.product_id,
+            'quantity': sale.quantity
+        } for sale in sales]
+        return jsonify(sales_data), 200
+
+    @app.route('/api/analytics/inventory', methods=['GET'])
+    @token_required
+    def get_inventory_status(current_user):
+        # Fetch inventory status for all products
+        inventory = Inventory.query.all()
+        inventory_data = [{
+            'product_id': item.product_id,
+            'stock_quantity': item.stock_quantity,
+            'last_updated': item.last_updated.strftime('%Y-%m-%d')
+        } for item in inventory]
+        return jsonify(inventory_data), 200
+
+    @app.route('/api/analytics/product-comparison', methods=['GET'])
+    @token_required
+    def get_product_comparison(current_user):
+        # Fetch product sales comparison data
+        products = Product.query.all()
+        comparison_data = [{
+            'product_id': product.id,
+            'product_name': product.name,
+            'total_sales': sum(sale.quantity for sale in product.sales),
+            'total_revenue': sum(sale.revenue for sale in product.sales)
+        } for product in products]
+        return jsonify(comparison_data), 200
 
     return app
 
