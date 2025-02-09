@@ -17,6 +17,7 @@ import AdminLayout from "./components/AdminLayout";
 import AboutUs from "./pages/AboutUs";
 import ProductListingPage from "./pages/ProductListingPage";
 import OfferPage from "./pages/Offers";
+import EditProduct from "./components/EditProduct";
 
 const App: React.FC = () => {
     return (
@@ -73,6 +74,7 @@ const MainApp: React.FC = () => {
                         <Route path="dashboard" element={<AdminDashboard />} />
                         <Route path="products" element={<ProductManagement />} />
                         <Route path="create-product" element={<CreateProduct />} />
+                        <Route path="edit-product/:id" element={<EditProduct />} />
                     </Route>
                 </Routes>
             </main>

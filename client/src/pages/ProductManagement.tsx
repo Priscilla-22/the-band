@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import config from '../config';
 
-
 interface Product {
     id: number;
     name: string;
@@ -18,7 +17,6 @@ const ProductManagement: React.FC = () => {
     const [error, setError] = useState<string>('');
 
     useEffect(() => {
-
         const fetchProducts = async () => {
             try {
                 const response = await axios.get(`${config.BASE_URL}/products`, {
@@ -56,7 +54,9 @@ const ProductManagement: React.FC = () => {
     return (
         <div className="container mt-28">
             <h1 className="text-2xl font-bold mb-4">Product Management</h1>
-            <Link to="/admin/create-product" className={`w-full p-3 mb-10 bg-gradient-to-r from-black to-red-600 text-white rounded-lg hover:bg-gradient-to-r hover:from-black hover:to-red-700 transition-colors ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}>Add New Product</Link>
+            <Link to="/admin/create-product" className={`w-full p-3 mb-10 bg-gradient-to-r from-black to-red-600 text-white rounded-lg hover:bg-gradient-to-r hover:from-black hover:to-red-700 transition-colors ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                Add New Product
+            </Link>
 
             {loading ? (
                 <p>Loading products...</p>
@@ -79,7 +79,7 @@ const ProductManagement: React.FC = () => {
                             <td className="py-2 px-4 border">{product.name}</td>
                             <td className="py-2 px-4 border">${product.price}</td>
                             <td className="py-2 px-4 border">
-                                <Link to={`/admin/product/edit/${product.id}`} className="text-blue-500 mr-2">Edit</Link>
+                                <Link to={`/admin/edit-product/${product.id}`} className="text-blue-500 mr-2">Edit</Link>
                                 <button
                                     onClick={() => handleDelete(product.id)}
                                     className="text-red-500"
