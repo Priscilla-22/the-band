@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useProductContext } from '../context/ProductContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Modal from './Modal';
 import AdminLogin from './AdminLogin';
@@ -21,6 +21,7 @@ const Navbar: React.FC<NavbarProps> = () => {
     const [cartAnimation, setCartAnimation] = useState<boolean>(false);
     const { isAuthenticated, logout } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation(); // Get the current location (path)
 
     // nav items
     const navItems: NavItem[] = [
@@ -29,7 +30,6 @@ const Navbar: React.FC<NavbarProps> = () => {
         { name: 'Offers', path: '/offers' },
         { name: 'About', path: '/about' },
     ];
-
 
     if (isAuthenticated) {
         navItems.push({ name: 'Dashboard', path: '/admin/dashboard' });
@@ -62,8 +62,13 @@ const Navbar: React.FC<NavbarProps> = () => {
         </li>
     );
 
+    // Check if the current page is the product listing page
+    const isProductPage = location.pathname.includes('/products');
+
     return (
-        <header className="absolute top-0 left-0 w-full bg-black/40 text-white p-8 flex justify-between items-center z-50 font-delius">
+        <header
+            className={`absolute top-0 left-0 w-full bg-black/40 text-white p-8 flex justify-between items-center z-50 font-delius ${isProductPage ? 'shadow-b-md shadow-gray-300' : ''}`}
+        >
             {/* Logo Section */}
             <div className="flex items-center space-x-2">
                 <img

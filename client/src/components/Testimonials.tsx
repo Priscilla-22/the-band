@@ -26,7 +26,7 @@ const Testimonials: React.FC = () => {
     }, []);
 
     return (
-        <section className="testimonials-section py-10 bg-gray-100">
+        <section className="testimonials-section py-10 bg-gray-100 mt-10">
             <h2 className="text-3xl font-bold text-center mb-6">What Our Customers Say</h2>
             <div className="testimonial-cards flex flex-wrap justify-center gap-8">
                 {testimonials.map((testimonial) => (

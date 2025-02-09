@@ -45,7 +45,12 @@ const MainApp: React.FC = () => {
                     <Route path="/" element={
                         <>
                             <HeroSection />
+                            <div className="container mx-auto text-center mt-10">
+                                <h3 className="text-lg sm:text-3xl font-bold mb-4">Welcome to MyStore</h3>
+                                <p className="text-lg sm:text-xl mb-8">Discover the best deals and amazing products at unbeatable prices.</p>
+                            </div>
                             <div className="container mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+
                                 {products.map(product => (
                                     <ProductCard key={product.id} product={product} />
                                 ))}

@@ -14,8 +14,8 @@ const HeroSection: React.FC = () => {
             {/* Content */}
             <div className="relative text-center text-white z-20">
                 <h1 className="text-5xl md:text-7xl font-extrabold uppercase transform skew-x-2">
-                    <span className="text-white">Black</span>{" "}
-                    <span className="text-red-500">Friday</span>
+                    <span className="text-white">The</span>{" "}
+                    <span className="text-red-500">Band</span>
                 </h1>
                 <p className="mt-4 text-xl md:text-2xl font-semibold">
                     Sale Up to <span className="text-red-500">50% Off</span>
