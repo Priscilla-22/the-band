@@ -34,7 +34,7 @@ const PromotionalBanner: React.FC = () => {
     const duplicatePromotions = [...promotions, ...promotions];
 
     return (
-        <div className="absolute bottom-0 left-0 px-6 py-4 pb-20 mx-auto max-w-4xl ">
+        <div className="absolute bottom-0  px-6 py-4 pb-20 mx-auto max-w-4xl ">
             {/* Scrollable Container */}
             <div
                 ref={scrollRef}
