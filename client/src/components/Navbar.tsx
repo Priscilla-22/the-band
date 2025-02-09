@@ -80,7 +80,7 @@ const Navbar: React.FC<NavbarProps> = () => {
             </div>
 
             {/* Navigation Menu */}
-            <nav className={`md:flex ${isMobileMenuOpen ? 'flex' : 'hidden'} space-x-8`}>
+            <nav className="md:flex hidden flex-row space-x-8">
                 <ul className="flex space-x-4">
                     {navItems.map((item) => (
                         <NavLink key={item.name} name={item.name} path={item.path} />
@@ -132,6 +132,19 @@ const Navbar: React.FC<NavbarProps> = () => {
             <Modal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)}>
                 <AdminLogin onSuccess={() => setIsLoginModalOpen(false)} />
             </Modal>
+
+            {/* Mobile Menu (Outside the NavBar, Pop-up Effect) */}
+            {isMobileMenuOpen && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 z-40">
+                    <nav className="bg-gray-500 p-2 mt-16 w-full max-w-xs mx-auto rounded-lg shadow-lg">
+                        <ul className="flex flex-col space-y-4">
+                            {navItems.map((item) => (
+                                <NavLink key={item.name} name={item.name} path={item.path} />
+                            ))}
+                        </ul>
+                    </nav>
+                </div>
+            )}
         </header>
     );
 };
