@@ -8,7 +8,7 @@ const PromotionalBanner: React.FC = () => {
     const [isScrolling, setIsScrolling] = useState(true);
 
     useEffect(() => {
-        fetch(`${config.BASE_URL}/promotions`)
+        fetch(`${config.BASE_URL}/api/promotions`)
             .then((response) => response.json())
             .then((data) => {
                 setPromotions(data);

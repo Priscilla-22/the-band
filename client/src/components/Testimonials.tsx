@@ -16,7 +16,7 @@ const Testimonials: React.FC = () => {
 
     useEffect(() => {
         axios
-            .get(`${config.BASE_URL}/testimonials`)
+            .get(`${config.BASE_URL}/api/testimonials`)
             .then((response) => {
                 setTestimonials(response.data);
             })
