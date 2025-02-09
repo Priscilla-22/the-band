@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import config from '../config'; // Import config.js
+import config from '../config';
 
-// Define interfaces for products
+
 interface Product {
     id: number;
     name: string;
@@ -18,12 +18,12 @@ const ProductManagement: React.FC = () => {
     const [error, setError] = useState<string>('');
 
     useEffect(() => {
-        // Fetch products from the API using BASE_URL from config.js
+
         const fetchProducts = async () => {
             try {
                 const response = await axios.get(`${config.BASE_URL}/products`, {
                     headers: {
-                        Authorization: `Bearer ${localStorage.getItem('auth_token')}`, // JWT token
+                        Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
                     },
                 });
                 setProducts(response.data);
@@ -46,7 +46,7 @@ const ProductManagement: React.FC = () => {
                         Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
                     },
                 });
-                setProducts(products.filter((product) => product.id !== id)); // Remove deleted product from the list
+                setProducts(products.filter((product) => product.id !== id));
             } catch (err) {
                 alert('Failed to delete the product');
             }

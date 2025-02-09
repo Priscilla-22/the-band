@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useProductContext } from '../context/ProductContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import Modal from './Modal'; // Import the Modal component
-import AdminLogin from './AdminLogin'; // Import the AdminLogin component
+import Modal from './Modal';
+import AdminLogin from './AdminLogin';
 
 interface NavItem {
     name: string;
@@ -16,13 +16,13 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // State for modal visibility
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
     const { cartCount } = useProductContext();
     const [cartAnimation, setCartAnimation] = useState<boolean>(false);
     const { isAuthenticated, logout } = useAuth();
     const navigate = useNavigate();
 
-    // Define navigation items
+    // nav items
     const navItems: NavItem[] = [
         { name: 'Home', path: '/' },
         { name: 'Products', path: '/products' },
@@ -30,7 +30,7 @@ const Navbar: React.FC<NavbarProps> = () => {
         { name: 'About', path: '/about' },
     ];
 
-    // Add "Dashboard" link if the user is authenticated
+
     if (isAuthenticated) {
         navItems.push({ name: 'Dashboard', path: '/admin/dashboard' });
     }
@@ -42,7 +42,7 @@ const Navbar: React.FC<NavbarProps> = () => {
     React.useEffect(() => {
         if (cartCount > 0) {
             setCartAnimation(true);
-            setTimeout(() => setCartAnimation(false), 1000); // Reset animation after 1 second
+            setTimeout(() => setCartAnimation(false), 1000);
         }
     }, [cartCount]);
 
@@ -69,7 +69,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                 <img
                     src="/logo192.png"
                     alt="Logo"
-                    className="w-10 h-10"
+                    className="w-10 h-10 bg-white"
                 />
                 <div className="text-xl font-bold">MyStore</div>
             </div>

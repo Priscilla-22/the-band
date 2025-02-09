@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       fontFamily: {
         delius: ["Delius", "cursive"],
+        roboto: ['Roboto', 'sans-serif'],
       },
     },
   },

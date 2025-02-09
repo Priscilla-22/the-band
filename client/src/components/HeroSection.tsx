@@ -1,20 +1,19 @@
-// src/components/HeroSection.tsx
-
 import React from "react";
-import PromotionalBanner from "./PromotionalBanner"; // Import the promotional banner
+import PromotionalBanner from "./PromotionalBanner";
+import {Link} from "react-router-dom";
 
 const HeroSection: React.FC = () => {
     return (
         <section
             className="relative w-full h-screen bg-cover bg-center flex items-center justify-center px-6 md:px-12"
-            style={{ backgroundImage: `url('/images/rnbb.jpeg')` }} // Background Image
+            style={{ backgroundImage: `url('/images/rnbb.jpeg')` }}
         >
-            {/* Dark Overlay to Ensure Text Visibility */}
+
             <div className="absolute inset-0 bg-black/70"></div>
 
             {/* Content */}
-            <div className="relative text-center text-white">
-                <h1 className="text-5xl md:text-7xl font-extrabold uppercase transform skew-x-12">
+            <div className="relative text-center text-white z-20">
+                <h1 className="text-5xl md:text-7xl font-extrabold uppercase transform skew-x-2">
                     <span className="text-white">Black</span>{" "}
                     <span className="text-red-500">Friday</span>
                 </h1>
@@ -26,13 +25,13 @@ const HeroSection: React.FC = () => {
                 </p>
 
                 {/* CTA Button */}
-                <div className="mt-6">
-                    <a
-                        href="#shop"
-                        className="bg-red-600 text-white px-6 py-3 rounded-full font-semibold text-lg tracking-wide shadow-lg hover:bg-red-700 transition duration-300"
+                <div className="mt-6 ">
+                    <Link
+                        to="/products"
+                        className="bg-red-600 text-white px-6 py-3 rounded-full font-semibold text-lg tracking-wide shadow-lg hover:bg-red-300 transition duration-300"
                     >
                         Shop Now
-                    </a>
+                    </Link>
                 </div>
 
                 {/* Social Icons */}
@@ -44,9 +43,8 @@ const HeroSection: React.FC = () => {
             </div>
 
             {/* Promotional Banner */}
-            <PromotionalBanner /> {/* Add the new component here */}
+            <PromotionalBanner />
 
-            {/* Decorative Diagonal Lines */}
             <div className="absolute top-0 left-0 w-full h-full flex flex-col">
                 <div className="absolute top-16 left-0 w-32 h-1 bg-red-600 rotate-45"></div>
                 <div className="absolute bottom-16 right-0 w-40 h-1 bg-red-600 -rotate-45"></div>

@@ -11,13 +11,12 @@ import ProductDetail from "./pages/ProductDetails";
 import AdminLogin from "./components/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import { AuthProvider } from './context/AuthContext';
-import ProductManagement from "./components/ProductManagement";
+import ProductManagement from "./pages/ProductManagement";
 import CreateProduct from "./pages/CreateProduct";
 import AdminLayout from "./components/AdminLayout";
 import AboutUs from "./pages/AboutUs";
-import ProductsPage from "./pages/ProductsPage";
-import ProductListingPage from "./pages/ProductsPage";
-import OfferPage from "./pages/Offers"; // Import the AdminLayout component
+import ProductListingPage from "./pages/ProductListingPage";
+import OfferPage from "./pages/Offers";
 
 const App: React.FC = () => {
     return (
@@ -54,7 +53,7 @@ const MainApp: React.FC = () => {
                         </>
                     } />
 
-                    <Route path="/about" element={<AboutUs />} />  {/* Add About Us route */}
+                    <Route path="/about" element={<AboutUs />} />
                     <Route path="/products" element={<ProductListingPage />} />
                     <Route path="/offers" element={<OfferPage />} />
 
@@ -66,21 +65,18 @@ const MainApp: React.FC = () => {
                         </div>
                     } />
 
-                    {/* Admin Login Route */}
+
                     <Route path="/login" element={<AdminLogin onSuccess={() => {}}  />} />
 
                     {/* Admin Routes Wrapped with AdminLayout */}
                     <Route path="/admin" element={<AdminLayout />}>
                         <Route path="dashboard" element={<AdminDashboard />} />
                         <Route path="products" element={<ProductManagement />} />
-                        <Route path="create-product" element={<CreateProduct />} /> {/* Add Create Product Route */}
-
-                        {/* Add more admin routes here */}
+                        <Route path="create-product" element={<CreateProduct />} />
                     </Route>
                 </Routes>
             </main>
 
-            {/* Footer */}
             <Footer />
         </div>
     );
