@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import config from "../config";
+import {Link} from "react-router-dom";
 
 const PromotionalBanner: React.FC = () => {
     const [promotions, setPromotions] = useState<any[]>([]);
@@ -50,18 +51,18 @@ const PromotionalBanner: React.FC = () => {
                 {duplicatePromotions.map((promotion, index) => (
                     <div
                         key={`promotion-${index}`}
-                        className={`min-w-[calc(50%-16px)] p-6 rounded-lg shadow-lg snap-start ${promotion.bg_color}`}
+                        className={`min-w-[calc(50%-16px)] p-6 rounded-lg shadow-lg z-20 snap-start ${promotion.bg_color}`}
                     >
                         <h3 className={`text-2xl font-bold ${promotion.text_color}`}>
                             {promotion.title}
                         </h3>
                         <p className="mt-2 text-gray-300">{promotion.description}</p>
-                        <a
-                            href={promotion.link}
+                        <Link
+                            to='/offers'
                             className="mt-4 bg-white text-black py-2 px-4 rounded-full font-semibold hover:bg-gray-200"
                         >
                             View Offers
-                        </a>
+                        </Link>
                     </div>
                 ))}
             </div>
