@@ -35,11 +35,11 @@ const PromotionalBanner: React.FC = () => {
     const duplicatePromotions = [...promotions, ...promotions];
 
     return (
-        <div className="absolute bottom-0 left-0 right-0 px-6 py-4 pb-20">
+        <div className="absolute bottom-0 left-0 right-0 px-6 py-4 pb-20 mx-auto max-w-4xl ">
             {/* Scrollable Container */}
             <div
                 ref={scrollRef}
-                className="flex gap-8 mx-auto max-w-4xl snap-x snap-mandatory"
+                className="flex gap-8 snap-x snap-mandatory"
                 style={{
                     overflowX: "auto",
                     scrollbarWidth: "none",
