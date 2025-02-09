@@ -1,4 +1,5 @@
 #server/app/app.py
+import os
 from flask import Flask, request, jsonify,session, redirect, url_for
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -7,6 +8,7 @@ from datetime import datetime,timedelta
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import check_password_hash
 import jwt
+
 
 
 
