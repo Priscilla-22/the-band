@@ -1,69 +1,64 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 const AboutUs: React.FC = () => {
     return (
-        <div className="bg-white text-black py-12 px-6 sm:px-12 md:px-16 mt-24">
-            <div className="container mx-auto">
-                {/* Hero Section */}
-                <div className="flex flex-col md:flex-row items-center justify-between mb-12">
-                    <div className="md:w-1/2">
-                        <h1 className="text-4xl font-bold mb-4 text-center md:text-left text-red-600">
-                            WHO WE ARE?
-                        </h1>
-                        <p className="text-lg mb-4">
-                            <span className="text-4xl font-bold inline-block">T</span>he Band is an innovative and dynamic group, dedicated to providing musical entertainment, and embracing the power of music to bring people together. Founded in 2020, The Band has captivated audiences through electrifying performances and strong artistic expression.
+        <section className="bg-white py-16 px-6 mt-28">
+            <div className="max-w-7xl mx-auto text-center">
+                <h2 className="text-4xl font-extrabold text-gray-900">About Us</h2>
+                <p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                    We are an online shopping platform dedicated to bringing you the best and most trendy products.
+                    Our mission is to provide a seamless shopping experience with top-notch customer service.
+                </p>
+
+                <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div className="flex flex-col items-center space-y-6">
+                        <img
+                            src="/images/redstain.jpg"
+                            alt="Team"
+                            className="w-64 h-64 rounded-full object-cover"
+                        />
+                        <h3 className="text-xl font-semibold text-gray-800">Our Mission</h3>
+                        <p className="text-gray-600 text-base">
+                            Our mission is to curate the best products that cater to your needs while ensuring
+                            excellent quality and the best prices.
                         </p>
                     </div>
-                    <div className="md:w-1/2">
-                        <video className="w-3/4 h-64 object-cover rounded-lg shadow-md mx-auto" controls>
-                            <source src="/path/to/your/video.mp4" type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
+
+                    <div className="flex flex-col items-center space-y-6">
+                        <img
+                            src="/images/redstrike.jpg"
+                            alt="Innovation"
+                            className="w-64 h-64 rounded-full object-cover"
+                        />
+                        <h3 className="text-xl font-semibold text-gray-800">Innovation</h3>
+                        <p className="text-gray-600 text-base">
+                            We strive to stay ahead of the curve with innovative solutions and products that
+                            offer something new and exciting for everyone.
+                        </p>
                     </div>
                 </div>
 
-                {/* Core Values */}
-                <div className="text-center mb-12">
-                    <h2 className="text-3xl font-semibold mb-6">Our Core Values</h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-                        <div className="bg-gray-100 p-6 rounded-lg shadow-md">
-                            <h3 className="text-xl font-semibold mb-2">Creativity</h3>
-                            <p className="text-sm text-gray-600">We believe in pushing boundaries and exploring new creative expressions through our music.</p>
-                        </div>
-                        <div className="bg-gray-100 p-6 rounded-lg shadow-md">
-                            <h3 className="text-xl font-semibold mb-2">Community</h3>
-                            <p className="text-sm text-gray-600">Music brings people together. We are committed to fostering a community of music lovers and creatives.</p>
-                        </div>
-                        <div className="bg-gray-100 p-6 rounded-lg shadow-md">
-                            <h3 className="text-xl font-semibold mb-2">Innovation</h3>
-                            <p className="text-sm text-gray-600">We always seek new ways to push the envelope in music production, performance, and experience.</p>
-                        </div>
-                        <div className="bg-gray-100 p-6 rounded-lg shadow-md">
-                            <h3 className="text-xl font-semibold mb-2">Passion</h3>
-                            <p className="text-sm text-gray-600">Our passion for music drives everything we do, from creation to performance.</p>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Mission & Vision */}
-                <div className="mb-12 text-center">
-                    <div className="flex flex-col md:flex-row justify-between">
-                        <div className="mb-6 md:mb-0 md:w-1/2">
-                            <h2 className="text-3xl font-semibold mb-4 text-red-600">Our Mission</h2>
-                            <p className="text-lg">
-                                <span className="text-4xl font-bold inline-block">T</span>o create music that resonates with diverse audiences, inspires creativity, and builds community through the power of sound.
-                            </p>
-                        </div>
-                        <div className="md:w-1/2">
-                            <h2 className="text-3xl font-semibold mb-4 text-red-600">Our Vision</h2>
-                            <p className="text-lg">
-                                <span className="text-4xl font-bold inline-block">T</span>o be a global force in the music industry, using our music to spark change, entertain, and connect people worldwide.
-                            </p>
-                        </div>
+                <div className="mt-12 bg-gray-800 text-white py-12 px-6 rounded-lg">
+                    <h3 className="text-3xl font-bold text-center">Join Us on Our Journey</h3>
+                    <p className="mt-4 text-lg text-center text-gray-300">
+                        Be a part of our growing community and enjoy exclusive offers, exciting promotions,
+                        and the best shopping experience you can find online.
+                    </p>
+                    <div className="mt-8 flex justify-center space-x-4">
+                        <Link
+                            to="/products"
+                            className="bg-red-600 text-white px-6 py-3 rounded-full font-semibold text-lg tracking-wide shadow-lg hover:bg-red-300 transition duration-300"
+                        >
+                            Shop Now
+                        </Link>
+                        <button className="bg-black text-white font-semibold py-2 px-6 rounded-full hover:bg-gray-800 transition-all">
+                            Learn More
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     );
 };
 
