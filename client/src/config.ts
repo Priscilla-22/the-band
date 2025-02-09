@@ -1,5 +1,5 @@
 const config = {
-    BASE_URL: 'https://the-band-w4bx.onrender.com',
+    BASE_URL: process.env.REACT_APP_BASE_URL,
 };
 
 export default config;
