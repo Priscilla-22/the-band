@@ -56,14 +56,14 @@ const ProductManagement: React.FC = () => {
     return (
         <div className="container mt-28">
             <h1 className="text-2xl font-bold mb-4">Product Management</h1>
-            <Link to="/admin/product/create" className="text-white bg-blue-500 p-2 rounded mb-4 inline-block">Add New Product</Link>
+            <Link to="/admin/create-product" className={`w-full p-3 mb-10 bg-gradient-to-r from-black to-red-600 text-white rounded-lg hover:bg-gradient-to-r hover:from-black hover:to-red-700 transition-colors ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}>Add New Product</Link>
 
             {loading ? (
                 <p>Loading products...</p>
             ) : error ? (
                 <p>{error}</p>
             ) : (
-                <table className="min-w-full bg-white shadow-md rounded-lg">
+                <table className="min-w-full bg-white shadow-md rounded-lg mt-10">
                     <thead>
                     <tr>
                         <th className="py-2 px-4 border">ID</th>

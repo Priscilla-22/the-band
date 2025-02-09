@@ -6,15 +6,19 @@ const Footer: React.FC = () => {
             <div className="container mx-auto px-6">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {/* Left Column - Company Info */}
-                    <div>
-                        <h3 className="text-2xl font-bold">MyStore</h3>
-                        <p className="text-sm mt-3">Subscribe to our newsletter for updates on our latest products, offers, and more.</p>
+                    <div className="font-delius">
+                        <img
+                            src="/logo192.png"
+                            alt="MyStore Logo"
+                            className="w-32 h-auto bg-gray-400 p-3 rounded-3xl" // You can adjust the width and height here
+                        />
+                        <p className="text-sm mt-3 font-delius">Subscribe to our newsletter for updates on our latest products, offers, and more.</p>
                     </div>
 
                     {/* Center Column - Links */}
                     <div>
-                        <h3 className="text-xl font-semibold mb-3">Links</h3>
-                        <ul className="space-y-2 text-sm">
+                        <h3 className="text-xl font-semibold font-delius mb-3">Links</h3>
+                        <ul className="space-y-2 text-sm font-delius">
                             <li><a href="/home" className="hover:text-gray-300">Home</a></li>
                             <li><a href="/services" className="hover:text-gray-300">Services</a></li>
                             <li><a href="/about" className="hover:text-gray-300">About Us</a></li>
@@ -25,21 +29,21 @@ const Footer: React.FC = () => {
 
                     {/* Right Column - Newsletter & Social Media */}
                     <div>
-                        <h3 className="text-xl font-semibold mb-3">Newsletter</h3>
+                        <h3 className="text-xl font-semibold font-delius mb-3">Newsletter</h3>
                         <div className="flex">
                             <input
                                 type="email"
                                 placeholder="Enter your email"
-                                className="p-3 rounded-l-md w-64 focus:outline-none"
+                                className="p-3 rounded-l-md w-64 focus:outline-none font-delius"
                             />
-                            <button className="bg-red-600 text-white p-3 rounded-r-md hover:bg-red-700 focus:outline-none">
+                            <button className="bg-red-600 text-white p-3 rounded-r-md hover:bg-red-700 focus:outline-none font-delius">
                                 Subscribe
                             </button>
                         </div>
 
                         <div className="mt-6">
-                            <h3 className="text-xl font-semibold mb-3">Follow Us</h3>
-                            <div className="flex space-x-4">
+                            <h3 className="text-xl font-semibold mb-3 font-delius">Follow Us</h3>
+                            <div className="flex space-x-4 font-delius">
                                 <a href="#" className="text-white hover:text-gray-400">
                                     <i className="fab fa-facebook-f"></i>
                                 </a>
@@ -64,7 +68,7 @@ const Footer: React.FC = () => {
 
                 {/* Footer Bottom - Copyright */}
                 <div className="mt-6 flex justify-center items-center">
-                    <div className="ml-6 text-sm">
+                    <div className="ml-6 text-sm font-delius">
                         <p>&copy; 2025 MyStore. All Rights Reserved.</p>
                     </div>
                 </div>
