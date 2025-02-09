@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import config from "../config"; // Assuming you have the config file to set the base URL
+import config from "../config";
 
 interface Testimonial {
     id: number;
@@ -8,7 +8,7 @@ interface Testimonial {
     review: string;
     rating: number;
     date: string;
-    image_url: string;  // Added to handle the image URL
+    image_url: string;
 }
 
 const Testimonials: React.FC = () => {

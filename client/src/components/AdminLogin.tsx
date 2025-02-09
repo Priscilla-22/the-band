@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext'
+import config from '../config'
 
 interface AdminLoginProps {
-    onSuccess: () => void; // Callback to close the modal on successful login
+    onSuccess: () => void;
 }
 
 const AdminLogin: React.FC<AdminLoginProps> = ({ onSuccess }) => {
@@ -20,7 +21,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onSuccess }) => {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/admin/login', {
+            const response = await fetch(`${config.BASE_URL}/admin/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -35,10 +36,9 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onSuccess }) => {
             const data = await response.json();
             const token = data.token;
 
-            // Save token to localStorage
             login(token);
 
-            onSuccess(); // Close the modal on successful login
+            onSuccess();
         } catch (err) {
             setError('Login failed. Please check your credentials.');
         }

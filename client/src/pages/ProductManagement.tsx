@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import config from '../config';
-import { FaEllipsisV, FaEdit, FaTrashAlt } from 'react-icons/fa'; // Import icons from react-icons
-import Modal from '../components/Modal'; // Import the Modal component
+import { FaEllipsisV, FaEdit, FaTrashAlt } from 'react-icons/fa';
+import Modal from '../components/Modal';
 
 interface Product {
     id: number;
@@ -17,9 +17,9 @@ const ProductManagement: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>('');
-    const [openDropdown, setOpenDropdown] = useState<number | null>(null); // For dropdown visibility
-    const [showModal, setShowModal] = useState<boolean>(false); // For showing the delete confirmation modal
-    const [productToDelete, setProductToDelete] = useState<number | null>(null); // Product to delete
+    const [openDropdown, setOpenDropdown] = useState<number | null>(null);
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [productToDelete, setProductToDelete] = useState<number | null>(null);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -50,15 +50,14 @@ const ProductManagement: React.FC = () => {
                 },
             });
             setProducts(products.filter((product) => product.id !== productToDelete));
-            setShowModal(false); // Close modal after deletion
+            setShowModal(false);
         } catch (err) {
             alert('Failed to delete the product');
-            setShowModal(false); // Close modal even on error
+            setShowModal(false);
         }
     };
 
     const toggleDropdown = (id: number) => {
-        // Toggle dropdown visibility for the clicked product ID
         setOpenDropdown(openDropdown === id ? null : id);
     };
 
@@ -115,7 +114,7 @@ const ProductManagement: React.FC = () => {
                                                 <li
                                                     className="flex items-center px-4 py-2 text-sm text-red-500 hover:bg-gray-100 cursor-pointer"
                                                     onClick={(e) => {
-                                                        e.stopPropagation(); // Prevent event propagation
+                                                        e.stopPropagation();
                                                         setProductToDelete(product.id);
                                                         setShowModal(true);
                                                     }}

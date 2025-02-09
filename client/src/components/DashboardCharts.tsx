@@ -2,15 +2,14 @@ import React from 'react';
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 import { Bar, Pie } from 'react-chartjs-2';
 
-// Register the required chart components
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 
 interface DashboardChartsProps {
     salesData: { date: string; revenue: number }[];
     productComparisonData: { product_name: string; total_revenue: number }[];
     inventoryData: { product_id: number; stock_quantity: number; last_updated: string }[];
-    timePeriod: '7days' | '30days' | 'year'; // Add 'year' option
-    setTimePeriod: (timePeriod: '7days' | '30days' | 'year') => void; // Update type
+    timePeriod: '7days' | '30days' | 'year';
+    setTimePeriod: (timePeriod: '7days' | '30days' | 'year') => void;
 }
 
 const DashboardCharts: React.FC<DashboardChartsProps> = ({
@@ -24,11 +23,11 @@ const DashboardCharts: React.FC<DashboardChartsProps> = ({
     const filteredSalesData = React.useMemo(() => {
         switch (timePeriod) {
             case '7days':
-                return salesData.slice(-7); // Show last 7 days
+                return salesData.slice(-7);
             case '30days':
-                return salesData.slice(-30); // Show last 30 days
+                return salesData.slice(-30);
             case 'year':
-                return salesData; // Show all data for the year
+                return salesData;
             default:
                 return salesData;
         }
@@ -87,7 +86,7 @@ const DashboardCharts: React.FC<DashboardChartsProps> = ({
                     >
                         <option value="7days">Last 7 Days</option>
                         <option value="30days">Last 30 Days</option>
-                        <option value="year">Year</option> {/* Add this option */}
+                        <option value="year">Year</option>
                     </select>
                 </div>
                 <div style={{ width: '100%', height: '400px' }}>

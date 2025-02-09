@@ -13,7 +13,6 @@ interface Product {
 const OfferPage: React.FC = () => {
     const { products } = useProductContext();
 
-    // Function to simulate discounts
     const getSimulatedDiscount = (product: Product): number => {
 
         if (product.price > 100) {

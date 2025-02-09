@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaTachometerAlt, FaBox, FaPlusCircle } from 'react-icons/fa'; // Import icons from react-icons
+import { FaTachometerAlt, FaBox, FaPlusCircle } from 'react-icons/fa';
 
 const Sidebar: React.FC = () => {
     return (

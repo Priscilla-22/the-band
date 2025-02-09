@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import config from '../config'; // Import config.js
+import config from '../config';
 
-// Define the product interface
 interface ProductForm {
     name: string;
     description: string;
@@ -65,7 +64,6 @@ const CreateProduct: React.FC = () => {
 
             <form onSubmit={handleSubmit} className="bg-white p-8 shadow-lg rounded-lg max-w-3xl mx-auto space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* Name Field */}
                     <div className="relative">
                         <input
                             type="text"
@@ -208,7 +206,6 @@ const CreateProduct: React.FC = () => {
                     {loading ? 'Creating Product...' : 'Create Product'}
                 </button>
 
-                {/* Error Message */}
                 {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
             </form>
         </div>

@@ -20,7 +20,6 @@ const PromotionalBanner: React.FC = () => {
                 const scrollLeft = scrollRef.current.scrollLeft;
                 const clientWidth = scrollRef.current.clientWidth;
 
-                // If we have reached the end, reset to the start
                 if (scrollLeft + clientWidth >= scrollWidth) {
                     scrollRef.current.scrollTo({ left: 0, behavior: "auto" });
                 } else {

@@ -18,7 +18,7 @@ const EditProduct: React.FC = () => {
     });
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>('');
-    const [imagePreview, setImagePreview] = useState<string>(''); // State to store the image preview URL
+    const [imagePreview, setImagePreview] = useState<string>('');
 
     // Fetch product data based on the ID from the URL
     useEffect(() => {
@@ -30,11 +30,11 @@ const EditProduct: React.FC = () => {
                     },
                 });
                 setProduct(response.data);
-                setImagePreview(response.data.image_url); // Set the initial image preview
-                setLoading(false); // Set loading to false once data is fetched
+                setImagePreview(response.data.image_url);
+                setLoading(false);
             } catch (err) {
                 setError('Failed to fetch product');
-                setLoading(false); // Stop loading on error
+                setLoading(false);
             }
         };
 
@@ -45,9 +45,8 @@ const EditProduct: React.FC = () => {
         const { name, value } = e.target;
         setProduct({ ...product, [name]: value });
 
-        // If the field is 'image_url', update the image preview as well
         if (name === 'image_url') {
-            setImagePreview(value); // Update the image preview
+            setImagePreview(value);
         }
     };
 
@@ -63,19 +62,17 @@ const EditProduct: React.FC = () => {
                 },
             });
             setLoading(false);
-            navigate('/admin/products'); // Redirect to the product list after updating
+            navigate('/admin/products');
         } catch (err) {
             setLoading(false);
             setError('Failed to update product');
         }
     };
 
-    // If loading, show a loading spinner
     if (loading) {
         return <p>Loading...</p>;
     }
 
-    // If there's an error, display it
     if (error) {
         return <p className="text-red-500">{error}</p>;
     }
@@ -85,7 +82,6 @@ const EditProduct: React.FC = () => {
             <h1 className="text-2xl font-bold mb-4">Edit Product</h1>
 
             <form onSubmit={handleSubmit} className="bg-white p-4 shadow-md rounded">
-                {/* Form fields pre-filled with product data */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label htmlFor="name" className="block text-sm font-medium text-gray-700">Product Name</label>
@@ -148,7 +144,6 @@ const EditProduct: React.FC = () => {
                         />
                     </div>
 
-                    {/* Image URL and Preview */}
                     <div>
                         <label htmlFor="image_url" className="block text-sm font-medium text-gray-700">Image URL</label>
                         <input

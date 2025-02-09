@@ -62,7 +62,6 @@ const Navbar: React.FC<NavbarProps> = () => {
         </li>
     );
 
-    // Check if the current page is the product listing page
     const isProductPage = location.pathname.includes('/products');
 
     return (
@@ -113,7 +112,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                 {/* Login Button */}
                 {!isAuthenticated ? (
                     <button
-                        onClick={() => setIsLoginModalOpen(true)} // Open the login modal
+                        onClick={() => setIsLoginModalOpen(true)}
                         className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
                     >
                         Login

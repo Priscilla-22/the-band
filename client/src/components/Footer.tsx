@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
                         <img
                             src="/logo192.png"
                             alt="MyStore Logo"
-                            className="w-32 h-auto bg-gray-400 p-3 rounded-3xl" // You can adjust the width and height here
+                            className="w-32 h-auto bg-gray-400 p-3 rounded-3xl"
                         />
                         <p className="text-sm mt-3 font-delius">Subscribe to our newsletter for updates on our latest products, offers, and more.</p>
                     </div>
@@ -63,7 +63,7 @@ const Footer: React.FC = () => {
 
                 {/* Horizontal Line in the center */}
                 <div className="flex justify-center mt-6">
-                    <div className="w-1/2 border-t-2 border-gray-600"></div> {/* Horizontal Line */}
+                    <div className="w-1/2 border-t-2 border-gray-600"></div>
                 </div>
 
                 {/* Footer Bottom - Copyright */}

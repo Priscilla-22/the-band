@@ -1,6 +1,6 @@
-// src/context/ProductContext.tsx
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import axios from 'axios';
+import config from "../config";
 
 interface Product {
     id: number;
@@ -32,7 +32,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
 
     // Fetch products from the backend API
     useEffect(() => {
-        axios.get('http://localhost:5000/api/products') // Ensure this matches your Flask API
+        axios.get(`${config.BASE_URL}/api/products`)
             .then(response => setProducts(response.data))
             .catch(error => console.error('Error fetching products:', error));
     }, []);
@@ -41,12 +41,10 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
         const existingItemIndex = cartItems.findIndex(item => item.product.id === product.id);
 
         if (existingItemIndex !== -1) {
-            // Update the quantity if the product is already in the cart
             const updatedItems = [...cartItems];
             updatedItems[existingItemIndex].quantity += quantity;
             setCartItems(updatedItems);
         } else {
-            // Add a new item to the cart
             setCartItems([...cartItems, { product, quantity }]);
         }
         setCartCount(cartCount + quantity);
@@ -65,7 +63,6 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
     );
 };
 
-// Custom hook to use the ProductContext
 export const useProductContext = () => {
     const context = useContext(ProductContext);
     if (!context) {

@@ -12,7 +12,7 @@ interface Product {
     image_url: string;
     ring_size_options: string[];
     finishing_options: string[];
-    more_details: string; // Added more details field
+    more_details: string;
 }
 
 const ProductDetailPage: React.FC = () => {
@@ -21,7 +21,7 @@ const ProductDetailPage: React.FC = () => {
     const [selectedSize, setSelectedSize] = useState<string>('Pick your size');
     const [selectedFinishing, setSelectedFinishing] = useState<string>('Shiny');
     const [quantity, setQuantity] = useState<number>(1);
-    const { addToCart } = useProductContext(); // Get addToCart from context
+    const { addToCart } = useProductContext();
 
 
     useEffect(() => {
@@ -36,7 +36,7 @@ const ProductDetailPage: React.FC = () => {
 
     const handleAddToCart = () => {
         if (product) {
-            addToCart(product, quantity); // Add the product with the selected quantity to the cart
+            addToCart(product, quantity);
         }
     };
 
@@ -73,7 +73,6 @@ const ProductDetailPage: React.FC = () => {
                     {/* More Details Section (Below Product Image and Information) */}
                     <div className="more-details mt-10 w-full justify-items-start">
                         <h2 className="text-3xl font-semibold text-gray-800">Detailed Information</h2>
-                        {/* Horizontal Line Below Heading */}
                         <hr className="my-4 border-t-2 border-red-500 w-[160px]" />
                         <p className="text-lg text-gray-700 mt-4 text-left">{product.more_details}</p>
                     </div>

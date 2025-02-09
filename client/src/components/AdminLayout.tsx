@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import Sidebar from './Sidebar'; // Import the Sidebar component
+import Sidebar from './Sidebar';
 
 const AdminLayout: React.FC = () => {
     return (
@@ -10,7 +10,7 @@ const AdminLayout: React.FC = () => {
 
             {/* Main Content */}
             <div className="flex-1 p-8 mt-20">
-                <Outlet /> {/* This will render the nested routes */}
+                <Outlet />
             </div>
         </div>
     );
