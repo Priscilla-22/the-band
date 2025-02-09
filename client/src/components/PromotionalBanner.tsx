@@ -27,12 +27,12 @@ const PromotionalBanner: React.FC = () => {
                     scrollRef.current.scrollBy({ left: 300, behavior: "smooth" });
                 }
             }
-        }, 2000); // Scroll every 2 seconds
+        }, 2000);
 
-        return () => clearInterval(interval); // Cleanup on unmount
+        return () => clearInterval(interval);
     }, [isScrolling]);
 
-    const duplicatePromotions = [...promotions, ...promotions]; // Duplicate the promotions to create a loop effect
+    const duplicatePromotions = [...promotions, ...promotions];
 
     return (
         <div className="absolute bottom-0 left-0 right-0 px-6 py-4 pb-20">
@@ -41,12 +41,12 @@ const PromotionalBanner: React.FC = () => {
                 ref={scrollRef}
                 className="flex gap-8 mx-auto max-w-4xl snap-x snap-mandatory"
                 style={{
-                    overflowX: "auto",  // Allow scrolling
-                    scrollbarWidth: "none",  // For Firefox
-                    msOverflowStyle: "none",  // For IE
+                    overflowX: "auto",
+                    scrollbarWidth: "none",
+                    msOverflowStyle: "none",
                 }}
-                onMouseEnter={() => setIsScrolling(false)} // Pause scrolling on hover
-                onMouseLeave={() => setIsScrolling(true)} // Resume scrolling when not hovering
+                onMouseEnter={() => setIsScrolling(false)}
+                onMouseLeave={() => setIsScrolling(true)}
             >
                 {duplicatePromotions.map((promotion, index) => (
                     <div
