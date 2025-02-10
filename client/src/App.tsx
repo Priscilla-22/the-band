@@ -51,9 +51,14 @@ const MainApp: React.FC = () => {
                             </div>
                             <div className="container mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
 
-                                {products.map(product => (
-                                    <ProductCard key={product.id} product={product} />
-                                ))}
+                                {Array.isArray(products) ? (
+                                    products.map(product => (
+                                        <ProductCard key={product.id} product={product} />
+                                    ))
+                                ) : (
+                                    <p>Loading products...</p> // Or show a fallback UI
+                                )}
+
                             </div>
                             <Testimonials />
                         </>
