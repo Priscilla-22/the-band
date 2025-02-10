@@ -26,7 +26,7 @@ const ProductDetailPage: React.FC = () => {
 
     useEffect(() => {
         const fetchProduct = async () => {
-            const response = await fetch(`${config.BASE_URL}/products/${id}`);
+            const response = await fetch(`${config.BASE_URL}/api/products/${id}`);
             const data = await response.json();
             setProduct(data);
         };
