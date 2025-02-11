@@ -54,7 +54,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onSuccess }) => {
                     <input
                         type="email"
                         id="email"
-                        className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md"
+                        className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md text-black"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
