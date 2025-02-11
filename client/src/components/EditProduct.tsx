@@ -24,7 +24,7 @@ const EditProduct: React.FC = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const response = await axios.get(`${config.BASE_URL}/products/${id}`, {
+                const response = await axios.get(`${config.BASE_URL}/api/products/${id}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
                     },
@@ -56,7 +56,7 @@ const EditProduct: React.FC = () => {
         setError('');
 
         try {
-            await axios.put(`${config.BASE_URL}/products/${id}`, product, {
+            await axios.put(`${config.BASE_URL}/api/products/${id}`, product, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
                 },

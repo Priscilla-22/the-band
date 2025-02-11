@@ -45,7 +45,7 @@ const CreateProduct: React.FC = () => {
         setError('');
 
         try {
-            const response = await axios.post(`${config.BASE_URL}/products`, product, {
+            const response = await axios.post(`${config.BASE_URL}/api/products`, product, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
                 },
