@@ -16,6 +16,9 @@ This is a full-stack e-commerce web application built with **ReactJS (TypeScript
 9. [Bonus Points](#bonus-points)
 
 ---
+## Admin Logins 
+email : admin@theband.com
+password : admin
 
 ## Features
 
