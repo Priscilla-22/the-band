@@ -21,7 +21,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onSuccess }) => {
         }
 
         try {
-            const response = await fetch(`${config.BASE_URL}/admin/login`, {
+            const response = await fetch(`${config.BASE_URL}/api/admin/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onSuccess }) => {
                     <input
                         type="password"
                         id="password"
-                        className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md"
+                        className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md text-black"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
