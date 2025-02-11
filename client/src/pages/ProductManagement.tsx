@@ -24,7 +24,7 @@ const ProductManagement: React.FC = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get(`${config.BASE_URL}/products`, {
+                const response = await axios.get(`${config.BASE_URL}/api/products`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
                     },
