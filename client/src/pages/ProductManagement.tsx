@@ -44,7 +44,7 @@ const ProductManagement: React.FC = () => {
         if (productToDelete === null) return;
 
         try {
-            await axios.delete(`${config.BASE_URL}/products/${productToDelete}`, {
+            await axios.delete(`${config.BASE_URL}/api/products/${productToDelete}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
                 },
