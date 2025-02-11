@@ -1,4 +1,3 @@
-#server/app/app.py
 import os
 from flask import Flask, request, jsonify,session, redirect, url_for
 from flask_cors import CORS
@@ -8,11 +7,12 @@ from datetime import datetime,timedelta
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import check_password_hash
 import jwt
+from functools import wraps
 
 
 
 
-# Initialize extensions
+
 db = SQLAlchemy()
 migrate = Migrate()
 
@@ -23,16 +23,16 @@ class Admin(UserMixin, db.Model):
     password = db.Column(db.String(150), nullable=False)
 
 
-# Define the Product model outside of create_app()
+#  Product model
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
     description = db.Column(db.String(500), nullable=True)
     price = db.Column(db.Float, nullable=False)
     image_url = db.Column(db.String(300), nullable=True)
-    ring_size_options = db.Column(db.JSON, nullable=True)  # Add ring size options as a list
+    ring_size_options = db.Column(db.JSON, nullable=True)
     finishing_options = db.Column(db.JSON, nullable=True)
-    more_details = db.Column(db.String(1000), nullable=True)  # New column to hold additional details
+    more_details = db.Column(db.String(1000), nullable=True)
     sales = db.relationship('Sale', backref='product', lazy=True)
 
 
@@ -41,25 +41,24 @@ class Promotion(db.Model):
     title = db.Column(db.String(120), nullable=False)
     description = db.Column(db.String(500), nullable=True)
     link = db.Column(db.String(300), nullable=True)
-    bg_color = db.Column(db.String(20), nullable=False)  # Background color for the promotion (red, yellow, etc.)
+    bg_color = db.Column(db.String(20), nullable=False)
     text_color = db.Column(db.String(20), nullable=False)
 
 class Testimonial(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     customer_name = db.Column(db.String(120), nullable=False)
     review = db.Column(db.String(500), nullable=False)
-    rating = db.Column(db.Integer, nullable=False)  # rating out of 5
+    rating = db.Column(db.Integer, nullable=False)
     date = db.Column(db.DateTime, default=datetime.utcnow)
     image_url = db.Column(db.String(300), nullable=True)
 
-# Add these models to your existing models in app.py
 
 class Sale(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     sale_date = db.Column(db.DateTime, default=datetime.utcnow)
-    revenue = db.Column(db.Float, nullable=False)  # Calculated as quantity * product price
+    revenue = db.Column(db.Float, nullable=False)
 
 class Inventory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -71,9 +70,8 @@ def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///products.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SECRET_KEY'] = 'your_secret_key'  # This is required for session management
+    app.config['SECRET_KEY'] = 'your_secret_key'
 
-    # Initialize extensions
     db.init_app(app)
     migrate.init_app(app, db)
     login_manager = LoginManager()
@@ -81,14 +79,13 @@ def create_app():
     CORS(app, resources={r'/*': {'origins': '*'}})
 
     with app.app_context():
-        db.create_all()  # Ensures database tables exist
+        db.create_all()
 
-        # Load the user
+
     @login_manager.user_loader
     def load_user(user_id):
         return Admin.query.get(int(user_id))
 
-    # Create a JWT Token for authentication
     def generate_token(admin):
         token = jwt.encode(
             {'user_id': admin.id, 'exp': datetime.utcnow() + timedelta(hours=1)},
@@ -110,14 +107,13 @@ def create_app():
             return jsonify({"token": token}), 200
         return jsonify({"message": "Invalid credentials"}), 401
 
-    # Token validation decorator
+    # Token validation
     def token_required(f):
-        from functools import wraps
         @wraps(f)
         def decorated_function(*args, **kwargs):
             token = None
             if 'Authorization' in request.headers:
-                token = request.headers['Authorization'].split(" ")[1]  # Get token from header
+                token = request.headers['Authorization'].split(" ")[1]
 
             if not token:
                 return jsonify({'message': 'Token is missing!'}), 403
@@ -184,7 +180,7 @@ def create_app():
                 'description': product.description,
                 'price': product.price,
                 'image_url': product.image_url,
-                'ring_size_options': product.ring_size_options,  # Return ring size options
+                'ring_size_options': product.ring_size_options,
                 'finishing_options': product.finishing_options,
                 'more_details':product.more_details
             })
@@ -229,7 +225,7 @@ def create_app():
         } for p in promotions])
 
 
-    # Add a new API endpoint to fetch testimonials
+    # testimonials
     @app.route('/api/testimonials', methods=['GET'])
     def get_testimonials():
         testimonials = Testimonial.query.all()
@@ -243,12 +239,10 @@ def create_app():
         } for t in testimonials])
 
 
-    # Add these routes to your existing routes in app.py
 
     @app.route('/api/analytics/sales', methods=['GET'])
     @token_required
     def get_sales_analytics(current_user):
-        # Fetch sales data for the last 30 days
         sales = Sale.query.filter(Sale.sale_date >= datetime.utcnow() - timedelta(days=30)).all()
         sales_data = [{
             'date': sale.sale_date.strftime('%Y-%m-%d'),
@@ -261,7 +255,6 @@ def create_app():
     @app.route('/api/analytics/inventory', methods=['GET'])
     @token_required
     def get_inventory_status(current_user):
-        # Fetch inventory status for all products
         inventory = Inventory.query.all()
         inventory_data = [{
             'product_id': item.product_id,
@@ -273,7 +266,6 @@ def create_app():
     @app.route('/api/analytics/product-comparison', methods=['GET'])
     @token_required
     def get_product_comparison(current_user):
-        # Fetch product sales comparison data
         products = Product.query.all()
         comparison_data = [{
             'product_id': product.id,
